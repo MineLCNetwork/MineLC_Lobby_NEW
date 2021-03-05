@@ -1,0 +1,16 @@
+name: MineLC_Lobby
+main: com.minelc.LOBBY.LobbyMain
+author: Leo018
+version: 1.0
+commands:
+  minelc:
+    description: Comando del servidor.
+  mem:
+    description: memoria libre
+  tpworld:
+    description: memoria libre
+  commands:
+  bc:
+    description: Usea parabloquear comandos
+    usage: /ac <Command>
+    permission: ac.add

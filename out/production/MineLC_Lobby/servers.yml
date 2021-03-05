@@ -1,0 +1,386 @@
+lobby1:
+  ip: sys5.minelc.com
+  port: 25566
+  timeout: 1000
+  BungeeServerName: "lobby2"
+lobby2:
+  ip: sys5.minelc.com
+  port: 25567
+  timeout: 1000
+  BungeeServerName: "lobby6"
+lobby3:
+  ip: sys5.minelc.com
+  port: 25568
+  timeout: 1000
+  BungeeServerName: "lobby6"
+lobby4:
+  ip: sys5.minelc.com
+  port: 25569
+  timeout: 1000
+  BungeeServerName: "lobby6"
+lobby5:
+  ip: sys5.minelc.com
+  port: 25570
+  timeout: 1000
+  BungeeServerName: "lobby6"
+  UpdateInterval: 20
+pvpg1:
+  ip: sys4.minelc.com
+  port: 33001
+  timeout: 1000
+  BungeeServerName: "pvpg1"
+  UpdateInterval: 5
+pvpg2:
+  ip: sys4.minelc.com
+  port: 33002
+  timeout: 1000
+  BungeeServerName: "pvpg2"
+  UpdateInterval: 5
+pvpg3:
+  ip: sys4.minelc.com
+  port: 33003
+  timeout: 1000
+  BungeeServerName: "pvpg3"
+  UpdateInterval: 5
+pvpg4:
+  ip: sys4.minelc.com
+  port: 33004
+  timeout: 1000
+  BungeeServerName: "pvpg4"
+  UpdateInterval: 5
+pvpg5:
+  ip: sys4.minelc.com
+  port: 33005
+  timeout: 1000
+  BungeeServerName: "pvpg5"
+  UpdateInterval: 5
+pvpg6:
+  ip: sys4.minelc.com
+  port: 33006
+  timeout: 1000
+  BungeeServerName: "pvpg6"
+  UpdateInterval: 5
+pvpg7:
+  ip: sys4.minelc.com
+  port: 33007
+  timeout: 1000
+  BungeeServerName: "pvpg7"
+  UpdateInterval: 5
+pvpg8:
+  ip: sys4.minelc.com
+  port: 33008
+  timeout: 1000
+  BungeeServerName: "pvpg8"
+  UpdateInterval: 5
+pvpg9:
+  ip: sys4.minelc.com
+  port: 33009
+  timeout: 1000
+  BungeeServerName: "pvpg9"
+  UpdateInterval: 5
+pvpg10:
+  ip: sys4.minelc.com
+  port: 33010
+  timeout: 1000
+  BungeeServerName: "pvpg10"
+  UpdateInterval: 5
+pvpg11:
+  ip: sys4.minelc.com
+  port: 33011
+  timeout: 1000
+  BungeeServerName: "pvpg11"
+  UpdateInterval: 5
+pvpg12:
+  ip: sys4.minelc.com
+  port: 33012
+  timeout: 1000
+  BungeeServerName: "pvpg12"
+  UpdateInterval: 5
+pvpg13:
+  ip: sys4.minelc.com
+  port: 33013
+  timeout: 1000
+  BungeeServerName: "pvpg13"
+  UpdateInterval: 5
+pvpg14:
+  ip: sys4.minelc.com
+  port: 33014
+  timeout: 1000
+  BungeeServerName: "pvpg14"
+  UpdateInterval: 5
+pvpg15:
+  ip: sys4.minelc.com
+  port: 33015
+  timeout: 1000
+  BungeeServerName: "pvpg15"
+  UpdateInterval: 5
+survival2:
+  ip: sys1.minelc.com
+  port: 43366
+  timeout: 1000
+  BungeeServerName: "survival2"
+  UpdateInterval: 5
+kitpvp:
+  ip: sys1.minelc.com
+  port: 25569
+  timeout: 1000
+  BungeeServerName: "kitpvp"
+  UpdateInterval: 5
+creativo:
+  ip: sys1.minelc.com
+  port: 25750
+  timeout: 1000
+  UpdateInterval: 5
+  BungeeServerName: "creativo"
+HG1:
+  ip: sys2.minelc.com
+  port: 25564
+  timeout: 1000
+  BungeeServerName: "HG1"
+  UpdateInterval: 5
+HG2:
+  ip: sys2.minelc.com
+  port: 25563
+  timeout: 1000
+  BungeeServerName: "HG2"
+  UpdateInterval: 5
+HG3:
+  ip: sys2.minelc.com
+  port: 25562
+  timeout: 1000
+  BungeeServerName: "HG3"
+  UpdateInterval: 5
+HG4:
+  ip: sys2.minelc.com
+  port: 25561
+  timeout: 1000
+  BungeeServerName: "HG4"
+  UpdateInterval: 5
+HG5:
+  ip: sys2.minelc.com
+  port: 25560
+  timeout: 1000
+  BungeeServerName: "HG5"
+  UpdateInterval: 5
+HG6:
+  ip: sys2.minelc.com
+  port: 25559
+  timeout: 1000
+  BungeeServerName: "HG6"
+  UpdateInterval: 5
+HG7:
+  ip: sys2.minelc.com
+  port: 25558
+  timeout: 1000
+  BungeeServerName: "HG7"
+  UpdateInterval: 5
+HG8:
+  ip: sys2.minelc.com
+  port: 25557
+  timeout: 1000
+  BungeeServerName: "HG8"
+  UpdateInterval: 5
+HG9:
+  ip: sys2.minelc.com
+  port: 25556
+  timeout: 1000
+  BungeeServerName: "HG9"
+  UpdateInterval: 5
+HG10:
+  ip: sys2.minelc.com
+  port: 25555
+  timeout: 1000
+  BungeeServerName: "HG10"
+  UpdateInterval: 5
+HG11:
+  ip: sys2.minelc.com
+  port: 25554
+  timeout: 1000
+  BungeeServerName: "HG11"
+  UpdateInterval: 5
+HG12:
+  ip: sys2.minelc.com
+  port: 25553
+  timeout: 1000
+  BungeeServerName: "HG12"
+  UpdateInterval: 5
+HG13:
+  ip: sys2.minelc.com
+  port: 25552
+  timeout: 1000
+  BungeeServerName: "HG13"
+  UpdateInterval: 5
+HG14:
+  ip: sys2.minelc.com
+  port: 25551
+  timeout: 1000
+  BungeeServerName: "HG14"
+  UpdateInterval: 5
+HG15:
+  ip: sys2.minelc.com
+  port: 25550
+  timeout: 1000
+  BungeeServerName: "HG15"
+  UpdateInterval: 5
+HG16:
+  ip: sys3.minelc.com
+  port: 25549
+  timeout: 1000
+  BungeeServerName: "HG16"
+  UpdateInterval: 5
+HG17:
+  ip: sys3.minelc.com
+  port: 25548
+  timeout: 1000
+  BungeeServerName: "HG17"
+  UpdateInterval: 5
+HG18:
+  ip: sys3.minelc.com
+  port: 25547
+  timeout: 1000
+  BungeeServerName: "HG18"
+  UpdateInterval: 5
+HG19:
+  ip: sys3.minelc.com
+  port: 25546
+  timeout: 1000
+  BungeeServerName: "HG19"
+  UpdateInterval: 5
+HG20:
+  ip: sys3.minelc.com
+  port: 25545
+  timeout: 1000
+  BungeeServerName: "HG20"
+  UpdateInterval: 5
+HG21:
+  ip: sys3.minelc.com
+  port: 25544
+  timeout: 1000
+  BungeeServerName: "HG21"
+  UpdateInterval: 5
+HG22:
+  ip: sys3.minelc.com
+  port: 25543
+  timeout: 1000
+  BungeeServerName: "HG22"
+  UpdateInterval: 5
+HG23:
+  ip: sys3.minelc.com
+  port: 25542
+  timeout: 1000
+  BungeeServerName: "HG23"
+  UpdateInterval: 5
+HG24:
+  ip: sys3.minelc.com
+  port: 25541
+  timeout: 1000
+  BungeeServerName: "HG24"
+  UpdateInterval: 5
+HG25:
+  ip: sys3.minelc.com
+  port: 25540
+  timeout: 1000
+  BungeeServerName: "HG25"
+  UpdateInterval: 5
+skywars:
+  ip: sys6.minelc.com
+  port: 26120
+  timeout: 1000
+  BungeeServerName: "skywars"
+  UpdateInterval: 5
+skywars2:
+  ip: sys6.minelc.com
+  port: 26121
+  timeout: 1000
+  BungeeServerName: "skywars2"
+  UpdateInterval: 5
+skywars3:
+  ip: sys6.minelc.com
+  port: 26122
+  timeout: 1000
+  BungeeServerName: "skywars3"
+  UpdateInterval: 5
+skywars4:
+  ip: sys6.minelc.com
+  port: 26123
+  timeout: 1000
+  BungeeServerName: "skywars4"
+  UpdateInterval: 5
+skywars5:
+  ip: sys6.minelc.com
+  port: 26124
+  timeout: 1000
+  BungeeServerName: "skywars5"
+  UpdateInterval: 5
+bestia1:
+  ip: sys5.minelc.com
+  port: 25501
+  timeout: 1000
+  BungeeServerName: "bestia1"
+  UpdateInterval: 5
+bestia2:
+  ip: sys5.minelc.com
+  port: 25502
+  timeout: 1000
+  BungeeServerName: "bestia2"
+  UpdateInterval: 5
+bestia3:
+  ip: sys5.minelc.com
+  port: 25503
+  timeout: 1000
+  BungeeServerName: "bestia3"
+  UpdateInterval: 5
+bestia4:
+  ip: sys5.minelc.com
+  port: 25504
+  timeout: 1000
+  BungeeServerName: "bestia4"
+  UpdateInterval: 5
+bestia5:
+  ip: sys5.minelc.com
+  port: 25505
+  timeout: 1000
+  BungeeServerName: "bestia5"
+  UpdateInterval: 5
+bridges1:
+  ip: sys5.minelc.com
+  port: 25521
+  timeout: 1000
+  BungeeServerName: "bridges1"
+  UpdateInterval: 5
+bridges2:
+  ip: sys5.minelc.com
+  port: 25522
+  timeout: 1000
+  BungeeServerName: "bridges2"
+  UpdateInterval: 5
+bridges3:
+  ip: sys5.minelc.com
+  port: 25523
+  timeout: 1000
+  BungeeServerName: "bridges3"
+  UpdateInterval: 5
+bridges4:
+  ip: sys5.minelc.com
+  port: 25524
+  timeout: 1000
+  BungeeServerName: "bridges4"
+  UpdateInterval: 5
+bridges5:
+  ip: sys5.minelc.com
+  port: 25525
+  timeout: 1000
+  BungeeServerName: "bridges5"
+  UpdateInterval: 5
+bridges6:
+  ip: sys5.minelc.com
+  port: 25526
+  timeout: 1000
+  BungeeServerName: "bridges6"
+  UpdateInterval: 5
+bridges7:
+  ip: sys5.minelc.com
+  port: 25527
+  timeout: 1000
+  BungeeServerName: "bridges7"
+  UpdateInterval: 5

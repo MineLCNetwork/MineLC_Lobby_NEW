@@ -1,0 +1,9 @@
+KillBungeeMobsOnStop: false
+ShowPingErrorInConsole: true
+ItemGoBack: "340:0"
+Messages:
+  Conecting: "&aConecting with <ServerName>.."
+  ConnectError: "&4Error when trying to connect to <ServerName>"
+  GamesInProgress: "&eGames in progress"
+  InvTitleProgress: "&eProgress"
+  MenuGoBack: "&cGo Back"

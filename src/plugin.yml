@@ -1,0 +1,16 @@
+name: MineLC_Lobby
+main: com.minelc.LOBBY.LobbyMain
+authors: [Leo018, obed_007, ElBuenAnvita]
+version: 1.1
+commands:
+  minelc:
+    description: Comando del servidor.
+  mem:
+    description: memoria libre
+  tpworld:
+    description: memoria libre
+  commands:
+  bc:
+    description: Usea parabloquear comandos
+    usage: /ac <Command>
+    permission: ac.add

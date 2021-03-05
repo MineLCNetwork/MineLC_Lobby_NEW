@@ -1,0 +1,1627 @@
+# 
+#  name: "&b&l&k| &a&lSurvival &b&l&k|"
+#  location: world,0,1,2,10,10
+#  mobtype: creeper
+#  CustomStyle: true
+#  MobID: 516ea187-c08a-fa4c-8009-4c837b8f6c8f
+#  InventoryTitle: "&aSurvival Server"
+#  InventorySize: 9
+#  Contents: 0:true,0:true,0:true,0:true,0:true
+#  Servers:
+#    Server01:
+#      slot: 0
+#      ItemName: "&a"&bServer 1"
+#      ItemOnlineID: "35:5"
+#      ItemOnlineGlow: true
+#      ItemOnlineAmmount: 1
+#      ItemOnlineLore:
+#      - "&bPlayers: &e<CurrentPlayers>&7/&c<MaxPlayers>"
+#      - ""
+#      - "&a<Motd>"
+#      ItemNotJoinableID: "35:4"
+#      ItemNotJoinableGlow: true
+#      ItemNotJoinableAmmount: 1
+#      ItemNotJoinableIsFull: true
+#      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+#      ItemNotJoinableLore:
+#      - "&ePlayers: &e<CurrentPlayers>&7/&c<MaxPlayers>"
+#      - ""
+#      - "&e<Motd>"
+#      ItemOfflineID: "35:14"
+#      ItemOfflineGlow: false
+#      ItemOfflineAmmount: 1
+#      ItemOfflineLore:
+#      - "&4Offline"
+#      - ""
+
+mob0:
+  name: "&b&k|&a&l  Survival & Creativo  &b&k|"
+  location: world,-137,4,441,0,179
+  mobtype: PIG
+  CustomStyle: true
+  MobID: cc1f59b8-fa71-4e80-aee3-0b447ea3c7a5
+  InventoryTitle: Construccion
+  InventorySize: 9
+  Contents: 0:true,0:true,0:true,0:true,0:true
+  Servers:
+    survival2:
+      slot: 2
+      ItemName: "&aSurvival"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    creativo:
+      slot: 6
+      ItemName: "&aCreativo"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+mob1:
+  name: "&a&k|&6&l  Los Puentes  &a&k|"
+  location: world,-175,4,480,-90,0
+  mobtype: VILLAGER
+  CustomStyle: false
+  MobID: 2bbdb32f-3634-4cef-ad2d-bdd3c7dcbbce
+  InventoryTitle: Los Puentes
+  InventorySize: 9
+  Contents: 0:true,0:true,0:true,0:true,0:true
+  Servers:
+    bridges1:
+      slot: 0
+      ItemName: "&aPuentes 1"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bridges2:
+      slot: 0
+      ItemName: "&aPuentes 2"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bridges3:
+      slot: 0
+      ItemName: "&aPuentes 3"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bridges4:
+      slot: 0
+      ItemName: "&aPuentes 4"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bridges5:
+      slot: 0
+      ItemName: "&aPuentes 5"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bridges6:
+      slot: 0
+      ItemName: "&aPuentes 6"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+mob3:
+  name: "&1&k|&e&l  EDLB 2 &1&k|"
+  location: world,-175,4,530,-90,0
+  mobtype: CREEPER
+  CustomStyle: false
+  MobID: 83b33c67-772a-4f24-abba-42f31fc87fed
+  InventoryTitle: EDLB
+  InventorySize: 9
+  Contents: 0:true,0:true,0:true,0:true,0:true
+  Servers:
+    bestia1:
+      slot: 0
+      ItemName: "&aEDLB 1"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bestia2:
+      slot: 0
+      ItemName: "&aEDLB 2"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bestia3:
+      slot: 0
+      ItemName: "&aEDLB 3"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bestia4:
+      slot: 0
+      ItemName: "&aEDLB 4"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    bestia5:
+      slot: 0
+      ItemName: "&aEDLB 5"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+mob4:
+  name: "&4&k|&c&l  KIT-PVP  &4&k|"
+  location: world,-86,4,569,179,0
+  mobtype: SKELETON:WITHER
+  CustomStyle: true
+  MobID: bafefafe-1d84-46eb-96ed-151c563220ab
+  InventoryTitle: KitPVP
+  InventorySize: 9
+  Contents: 276:true,0:true,311:true,0:true,0:true
+  Servers:
+    kitpvp:
+      slot: 0
+      ItemName: "&aKitPVP"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+mob5:
+  name: "&3&k|&1&l  Skywars  &3&k|"
+  location: world,-96,4,434,-90,0
+  mobtype: SLIME
+  CustomStyle: true
+  MobID: 1f041e50-cba6-4795-89e7-8935f15f2691
+  InventoryTitle: SkyWars
+  InventorySize: 9
+  Contents: 0:true,0:true,0:true,0:true,0:true
+  Servers:
+    skywars:
+      slot: 0
+      ItemName: "&aSkywars 1"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    skywars2:
+      slot: 1
+      ItemName: "&aSkywars 2"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 2
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 2
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 2
+      ItemOfflineLore:
+      - "&cOffline"
+    skywars3:
+      slot: 2
+      ItemName: "&aSkywars 3"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 3
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 3
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 3
+      ItemOfflineLore:
+      - "&cOffline"
+    skywars4:
+      slot: 3
+      ItemName: "&aSkywars 4"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 4
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 4
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 4
+      ItemOfflineLore:
+      - "&cOffline"
+    skywars5:
+      slot: 4
+      ItemName: "&aSkywars 5"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 5
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 5
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 5
+      ItemOfflineLore:
+      - "&cOffline"
+mob6:
+  name: "&a&k|&2&l  HungerGames  &a&k|"
+  location: world,-42,4,480,90,0
+  mobtype: SKELETON:WITHER
+  CustomStyle: false
+  MobID: 28b86f37-08e6-4210-ab7a-06bb0222afe9
+  InventoryTitle: Juegos Del Hambre
+  InventorySize: 9
+  Contents: 267:true,0:true,311:true,0:true,0:true
+  Servers:
+    HG1:
+      slot: 0
+      ItemName: "&aHG 1"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG2:
+      slot: 0
+      ItemName: "&aHG 2"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG3:
+      slot: 0
+      ItemName: "&aHG 3"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG4:
+      slot: 0
+      ItemName: "&aHG 4"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG5:
+      slot: 0
+      ItemName: "&aHG 5"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG6:
+      slot: 0
+      ItemName: "&aHG 6"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG7:
+      slot: 0
+      ItemName: "&aHG 7"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG8:
+      slot: 0
+      ItemName: "&aHG 8"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG9:
+      slot: 0
+      ItemName: "&aHG 9"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG10:
+      slot: 0
+      ItemName: "&aHG 10"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG11:
+      slot: 0
+      ItemName: "&aHG 11"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG12:
+      slot: 0
+      ItemName: "&aHG 12"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG13:
+      slot: 0
+      ItemName: "&aHG 13"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG14:
+      slot: 0
+      ItemName: "&aHG 14"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG15:
+      slot: 0
+      ItemName: "&aHG 15"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG16:
+      slot: 0
+      ItemName: "&aHG 16"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG17:
+      slot: 0
+      ItemName: "&aHG 17"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG18:
+      slot: 0
+      ItemName: "&aHG 18"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG19:
+      slot: 0
+      ItemName: "&aHG 19"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG20:
+      slot: 0
+      ItemName: "&aHG 20"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG21:
+      slot: 0
+      ItemName: "&aHG 21"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG22:
+      slot: 0
+      ItemName: "&aHG 22"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG23:
+      slot: 0
+      ItemName: "&aHG 23"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG24:
+      slot: 0
+      ItemName: "&aHG 24"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    HG25:
+      slot: 0
+      ItemName: "&aHG 25"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+mob7:
+  name: "&4&k|&5&l  PVP GAMES  &4&k|"
+  location: world,-47,4,530,90,0
+  mobtype: ZOMBIE
+  CustomStyle: false
+  MobID: aaac5b54-1975-4ce7-8905-28b6b32fa3e3
+  InventoryTitle: PVPGames
+  InventorySize: 9
+  Contents: 0:true,0:true,311:true,312:true,0:true
+  Servers:
+    pvpg1:
+      slot: 0
+      ItemName: "&aPVPGames 1"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg2:
+      slot: 0
+      ItemName: "&aPVPGames 2"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg3:
+      slot: 0
+      ItemName: "&aPVPGames 3"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg4:
+      slot: 0
+      ItemName: "&aPVPGames 4"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg5:
+      slot: 0
+      ItemName: "&aPVPGames 5"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg6:
+      slot: 0
+      ItemName: "&aPVPGames 6"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg7:
+      slot: 0
+      ItemName: "&aPVPGames 7"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg8:
+      slot: 0
+      ItemName: "&aPVPGames 8"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg9:
+      slot: 0
+      ItemName: "&aPVPGames 9"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg10:
+      slot: 0
+      ItemName: "&aPVPGames 10"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg11:
+      slot: 0
+      ItemName: "&aPVPGames 11"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg12:
+      slot: 0
+      ItemName: "&aPVPGames 12"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg13:
+      slot: 0
+      ItemName: "&aPVPGames 13"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg14:
+      slot: 0
+      ItemName: "&aPVPGames 14"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+    pvpg15:
+      slot: 0
+      ItemName: "&aPVPGames 15"
+      ItemOnlineID: "133:0"
+      ItemOnlineGlow: true
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemNotJoinableID: "41:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso,comenzado
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&6Estado: &b<Motd>"
+      ItemOfflineID: "173:0"
+      ItemOfflineGlow: true
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&cOffline"
+lobbies:
+  CustomStyle: true
+  InventoryTitle: Selector De Lobby
+  InventorySize: 9
+  Servers:
+    lobby2:
+      slot: 0
+      ItemName: "&cLobby 1"
+      ItemOnlineID: "358:0"
+      ItemOnlineGlow: false
+      ItemOnlineAmmount: 1
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&cEstas en esta lobby!"
+      ItemNotJoinableID: "358:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 1
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&cEstas en esta lobby!"
+      ItemOfflineID: "358:0"
+      ItemOfflineGlow: false
+      ItemOfflineAmmount: 1
+      ItemOfflineLore:
+      - "&bJugadores: 0"
+      - ""
+      - "&cEstas en esta lobby!"
+    lobby3:
+      slot: 1
+      ItemName: "&aLobby 2"
+      ItemOnlineID: "395:0"
+      ItemOnlineGlow: false
+      ItemOnlineAmmount: 2
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemNotJoinableID: "395:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 2
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemOfflineID: "395:0"
+      ItemOfflineGlow: false
+      ItemOfflineAmmount: 2
+      ItemOfflineLore:
+      - "&cOffline"
+    lobby4:
+      slot: 2
+      ItemName: "&aLobby 3"
+      ItemOnlineID: "395:0"
+      ItemOnlineGlow: false
+      ItemOnlineAmmount: 3
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemNotJoinableID: "395:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 3
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemOfflineID: "395:0"
+      ItemOfflineGlow: false
+      ItemOfflineAmmount: 3
+      ItemOfflineLore:
+      - "&cOffline"
+    lobby5:
+      slot: 3
+      ItemName: "&aLobby 4"
+      ItemOnlineID: "395:0"
+      ItemOnlineGlow: false
+      ItemOnlineAmmount: 4
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemNotJoinableID: "395:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 4
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemOfflineID: "395:0"
+      ItemOfflineGlow: false
+      ItemOfflineAmmount: 4
+      ItemOfflineLore:
+      - "&cOffline"
+    lobby6:
+      slot: 4
+      ItemName: "&aLobby 5"
+      ItemOnlineID: "395:0"
+      ItemOnlineGlow: false
+      ItemOnlineAmmount: 5
+      ItemOnlineLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemNotJoinableID: "395:0"
+      ItemNotJoinableGlow: true
+      ItemNotJoinableAmmount: 5
+      ItemNotJoinableIsFull: true
+      ItemNotJoinableIfMotdContains: en juego,progreso
+      ItemNotJoinableLore:
+      - "&bJugadores: &a<CurrentPlayers>&7/&a<MaxPlayers>"
+      - ""
+      - "&aClick para ingresar!"
+      ItemOfflineID: "395:0"
+      ItemOfflineGlow: false
+      ItemOfflineAmmount: 5
+      ItemOfflineLore:
+      - "&cOffline"
