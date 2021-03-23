@@ -24,7 +24,7 @@ public class RankSubCMD implements CommandInterface {
                     if (args.length == 5) {
                         playername = args[4];
                         String rango = args[2].toUpperCase();
-                        long duracion = Long.valueOf(args[3]);
+                        long duracion = Long.parseLong(args[3]);
                         j = Jugador.getJugador(playername);
                         if (args[1].equalsIgnoreCase("addrank")) {
                             if (j.getBukkitPlayer() == null) {
@@ -33,8 +33,100 @@ public class RankSubCMD implements CommandInterface {
 
                             Util.logToFile("-----------------------------------------", LobbyMain.getInstance(), "vip.log");
                             Util.logToFile("El usuario " + playername + " con el rango " + j.getRank().name() + " de duracion: " + j.getRankduration() + " intenta comprar el rango" + rango + " de " + duracion, LobbyMain.getInstance(), "vip.log");
-                            if (j.is_ELITE()) {
+                            Ranks ranguito = Ranks.valueOf(rango);
+
+                            switch (j.getRank()) { // SWITCHING CASE WHEN PLAYER HAVE RANK
+                                case RUBY:
+                                    if (ranguito == Ranks.RUBY) {
+                                        j.addRankduration(duracion);
+                                        Database.savePlayerRankSYNC(j);
+                                        Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                    } else {
+                                        Util.logToFile("El usuario " + playername + " tiene rango ruby y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                    }
+                                    break;
+                                case ELITE:
+                                    switch (ranguito) { // SWITCHING CASE TYPE OF RANK --- 1
+                                        case RUBY:
+                                            j.setRank(ranguito);
+                                            j.setRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        case ELITE:
+                                            j.addRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        default:
+                                            Util.logToFile("El usuario " + playername + " tiene rango " + j.getRank().toString() + " y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                    }
+                                    break;
+                                case SVIP:
+                                    switch (ranguito) { // SWITCHING CASE TYPE OF RANK --- 1
+                                        case ELITE:
+                                        case RUBY:
+                                            j.setRank(ranguito);
+                                            j.setRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        case SVIP:
+                                            j.addRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        default:
+                                            Util.logToFile("El usuario " + playername + " tiene rango " + j.getRank().toString() + " y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                    }
+                                    break;
+                                case VIP:
+                                    switch (ranguito) { // SWITCHING CASE TYPE OF RANK --- 1
+                                        case SVIP:
+                                        case ELITE:
+                                        case RUBY:
+                                            j.setRank(ranguito);
+                                            j.setRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        case VIP:
+                                            j.addRankduration(duracion);
+                                            Database.savePlayerRankSYNC(j);
+                                            Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                        default:
+                                            Util.logToFile("El usuario " + playername + " tiene rango " + j.getRank().toString() + " y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                            break;
+                                    }
+                                    break;
+                                case DEFAULT:
+                                case PREMIUM:
+                                    j.setRank(ranguito);
+                                    j.setRankduration(duracion);
+                                    Database.savePlayerRankSYNC(j);
+                                    Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                    break;
+                                default:
+                                    Util.logToFile("El usuario " + playername + " tiene rango " + j.getRank().toString() + " y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                            }
+                            /*
+                            if (j.is_RUBY()) {
+                                if (rango.equalsIgnoreCase(Ranks.RUBY.name())) {
+                                    j.addRankduration(duracion);
+                                    Database.savePlayerRankSYNC(j);
+                                    Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                } else {
+                                    Util.logToFile("El usuario " + playername + " tiene rago ruby y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                }
+                            } else if (j.is_ELITE()) {
                                 if (rango.equalsIgnoreCase(Ranks.ELITE.name())) {
+                                    j.addRankduration(duracion);
+                                    Database.savePlayerRankSYNC(j);
+                                    Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
+                                } else if (rango.equalsIgnoreCase(Ranks.RUBY.name())) {
                                     j.addRankduration(duracion);
                                     Database.savePlayerRankSYNC(j);
                                     Util.logToFile("El usuario " + playername + " compro el rango " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
@@ -72,7 +164,7 @@ public class RankSubCMD implements CommandInterface {
                                 } else {
                                     Util.logToFile("El usuario " + playername + " tiene rago vip y se le ha intentado agregar " + rango + " de duracion: " + duracion, LobbyMain.getInstance(), "vip.log");
                                 }
-                            } else if (j.getRank() == Ranks.DEFAULT) {
+                            } else if (j.getRank() == Ranks.DEFAULT || j.getRank() == Ranks.PREMIUM) { // Ahora revisa si es premium o DEFAULT.
                                 j.setRank(Ranks.valueOf(rango));
                                 j.setRankduration(duracion);
                                 Database.savePlayerRankSYNC(j);
@@ -81,7 +173,7 @@ public class RankSubCMD implements CommandInterface {
 
                             if (j.getBukkitPlayer() == null) {
                                 Jugador.removeJugador(j.getPlayerName());
-                            }
+                            } */
                         } else if (args[1].equalsIgnoreCase("setrank")) {
                             if (j.getBukkitPlayer() == null) {
                                 Database.loadPlayerRank_SYNC(j);
@@ -97,7 +189,7 @@ public class RankSubCMD implements CommandInterface {
                         }
                     } else if (args.length == 4) {
                         playername = args[3];
-                        int vippoints = Integer.valueOf(args[2]);
+                        int vippoints = Integer.parseInt(args[2]);
                         j = Jugador.getJugador(playername);
                         if (args[1].equalsIgnoreCase("addvippoints")) {
                             if (j.getBukkitPlayer() == null) {
