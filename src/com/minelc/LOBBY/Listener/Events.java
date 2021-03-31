@@ -127,11 +127,12 @@ public class Events implements Listener {
         Jugador jug = Jugador.getJugador(p);
         jug.setBukkitPlayer(p);
         LobbyController.onJoin(p, jug);
-        if(jug.isOpciones_SVS_Enabled_Minilobby()){
+        /* if(jug.isOpciones_SVS_Enabled_Minilobby()){
             p.teleport(LobbyMain.minilobby);
         } else {
             p.teleport(LobbyMain.spawnLocation);
-        }
+        } */
+        p.teleport(LobbyMain.spawnLocation);
 
         for(Player Online : Bukkit.getOnlinePlayers()) {
             Jugador j2 = Jugador.getJugador(Online);

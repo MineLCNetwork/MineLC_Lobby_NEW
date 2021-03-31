@@ -1577,7 +1577,8 @@ public class LobbyController{
 							LobbyMain.sendPlayerToServer(e.getPlayer(),"survival","survival");
 							break;
 						case 18:
-							/* minilobby*/  LobbyController.changeMiniLobby(e.getPlayer());
+							/* minilobby*/  /* LobbyController.changeMiniLobby(e.getPlayer()); */
+							e.getPlayer().sendMessage(ChatColor.RED + "El MiniLobby ya no está disponible.");
 							break;
 						case 20:
 							/* creativo */ LobbyMain.sendPlayerToServer(e.getPlayer(), "creativo", "creativo");
@@ -1670,13 +1671,15 @@ public class LobbyController{
 
 	private static void changeMiniLobby(Player p){
 		Jugador jug=Jugador.getJugador(p);
-		jug.setOpciones_SVS_Enabled_Minilobby(!jug.isOpciones_SVS_Enabled_Minilobby());
+		// jug.setOpciones_SVS_Enabled_Minilobby(!jug.isOpciones_SVS_Enabled_Minilobby());
+		jug.setOpciones_SVS_Enabled_Minilobby(false);
 		Database.savePlayerOpciones_SVS(jug);
-		if(jug.isOpciones_SVS_Enabled_Minilobby()){
+		/* if(jug.isOpciones_SVS_Enabled_Minilobby()){
 			p.teleport(LobbyMain.minilobby);
 		} else {
 			p.teleport(LobbyMain.spawnLocation);
-		}
+		} */
+		p.sendMessage(ChatColor.RED + "El MiniLobby ya no está disponible.");
 	}
 
 	public static IconMenu updateInvSelector(){
