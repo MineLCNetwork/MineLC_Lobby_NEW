@@ -44,8 +44,25 @@ import com.minelc.LOBBY.Controller.MobsController;
 import java.util.List;
 
 import static com.minelc.LOBBY.Controller.LobbyController.formatoScoreboard;
+import static com.minelc.LOBBY.Controller.LobbyController.scoreboardsLibs;
 
 public class Events implements Listener {
+
+    @EventHandler
+    public void whenPlayerInteractWithEntity(PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof LivingEntity) {
+            LivingEntity npc = (LivingEntity) e.getRightClicked();
+            String name = npc.getName();
+
+            if (e.getRightClicked() instanceof Player) {
+                Player p = e.getPlayer();
+                Player toStack = (Player) e.getRightClicked();
+                if (p.isSneaking()) {
+                    LobbyController.MenuOpciones(p, toStack).open(p);
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent e) {
@@ -92,7 +109,7 @@ public class Events implements Listener {
 
     @EventHandler
     public void closeInv(InventoryCloseEvent e){
-        LobbyController.updateScoreboardPreGame();
+        // LobbyController.updateScoreboardPreGame();
     }
 
     @EventHandler
@@ -126,6 +143,10 @@ public class Events implements Listener {
         jug.checkRankduration();
         onJoin(e.getPlayer());
         addPermissionDefault(e.getPlayer());
+
+        for (Player pp : LobbyController.scoreboardsLibs.keySet()) {
+            LobbyController.scoreboardsLibs.get(pp).updatePublic();
+        }
     }
 
     private void onJoin(Player p) {

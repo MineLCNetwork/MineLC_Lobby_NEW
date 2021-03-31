@@ -5,22 +5,22 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.common.collect.Lists;
-import com.minelc.CORE.Utils.Util;
+import com.minelc.LOBBY.Util.AnvilGUI;
+import de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayerManager;
+import de.simonsator.partyandfriendsgui.api.PartyFriendsAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.apache.commons.lang.WordUtils;
+import me.tigerhix.lib.scoreboard.ScoreboardLib;
+import me.tigerhix.lib.scoreboard.common.EntryBuilder;
+import me.tigerhix.lib.scoreboard.type.ScoreboardHandler;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.*;
 
 import com.minelc.CORE.Controller.Database;
 import com.minelc.CORE.Controller.Jugador;
@@ -28,7 +28,6 @@ import com.minelc.CORE.Controller.Ranks;
 import com.minelc.CORE.Utils.IconMenu;
 import com.minelc.CORE.Utils.ItemUtils;
 import com.minelc.LOBBY.LobbyMain;
-import com.minelc.LOBBY.Listener.Events;
 
 public class LobbyController{
 	private static Scoreboard scoreboard=null;
@@ -108,9 +107,10 @@ public class LobbyController{
 	private static ItemStack discord;
 
 	private static Player prueba;
+	public static HashMap<Player, me.tigerhix.lib.scoreboard.type.Scoreboard> scoreboardsLibs = new HashMap<>();
 	private static ItemUtils selector;
 	static {
-		selector=new ItemUtils(Material.COMPASS,Short.valueOf((short)0),Integer.valueOf(1),ChatColor.GREEN+"Selector De Servidores",ChatColor.GRAY+"Click derecho para abrir el selector de servidores");
+		selector=new ItemUtils(Material.COMPASS,Short.valueOf((short)0),Integer.valueOf(1),ChatColor.GREEN+"Selector de Servidores",ChatColor.GRAY+"Click derecho para abrir el selector de servidores");
 		rangos=new ItemUtils(Material.ENDER_CHEST,Short.valueOf((short)0),Integer.valueOf(1),ChatColor.GREEN+"Rangos",ChatColor.GRAY+"Click derecho para abrir el mende rangos");
 		stats=new ItemUtils(Material.PAPER,Short.valueOf((short)0),Integer.valueOf(1),ChatColor.GREEN+"TOP Jugadores",ChatColor.GRAY+"Click derecho para abrir el mende estadisticas");
 		vanidad=new ItemUtils(Material.TRAPPED_CHEST,Short.valueOf((short)0),Integer.valueOf(1),ChatColor.GREEN+"Vanidad",ChatColor.GRAY+"Click derecho para abrir el mende vanidad");
@@ -146,18 +146,34 @@ public class LobbyController{
 
 
 	public static void onQuit(Player p){
-		if(LobbyMain.cooldown.containsKey(p.getName())){
-			LobbyMain.cooldown.remove(p.getName());
-		}
+		LobbyMain.cooldown.remove(p.getName());
 		Jugador.removeJugador(p.getName());
 
 		if(scoreboard.getTeams().contains(scoreboard.getTeam(p.getName())))
 			scoreboard.getTeam(p.getName()).unregister();
+
+		scoreboardsLibs.remove(p);
 	}
-	public static void updateScoreboardPreGame(){
+
+	public static void updateScoreboardPreGame() {
 		Collection<?extends Player> onlineplayers=Bukkit.getOnlinePlayers();
 		for(Player Online:onlineplayers){
-			Scoreboard sb=Online.getScoreboard();
+			Jugador j = Jugador.getJugador(Online);
+			Set<String> entries;
+			entries = scoreboard.getEntries();
+
+
+			/* for (String entry : entries) {
+				scoreboard.resetScores(entry);
+			} */
+
+			for (Team tms : Online.getScoreboard().getTeams()) {
+				if(tms.getName().equalsIgnoreCase(Online.getName())) {
+					tms.unregister();
+				}
+			}
+
+			Scoreboard sb = Online.getScoreboard();
 
 			if(sb==null){
 				sb=Bukkit.getScoreboardManager().getNewScoreboard();
@@ -215,22 +231,6 @@ public class LobbyController{
 					objGame.getScore(formatoScoreboard(row, Online)).setScore(x);
 					x--;
 				}
-
-				/*
-				objGame.getScore(ChatColor.GRAY + strDate).setScore(12);
-				objGame.getScore("    ").setScore(11);
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&',"Nick: &7"+Online.getName())).setScore(10);
-				objGame.getScore("  ").setScore(9);
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&',"LCoins:")).setScore(8);
-				objGame.getScore(ChatColor.YELLOW +"" +jugOnline.getLcoins()).setScore(7);
-				objGame.getScore("        ").setScore(6);
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&',"Rango: &b"+jugOnline.getRank())).setScore(5);
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&', "Duración: &a" + returnduration(jugOnline))).setScore(4);
-
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&',"Vip-Points: &a"+jugOnline.getRankpoints())).setScore(3);
-
-				objGame.getScore("     ").setScore(2);
-				objGame.getScore(ChatColor.translateAlternateColorCodes('&',"&eplay.minelc.net")).setScore(1); */
 			}
 
 			TEAMS.get("LCoins"+Online.getName()).setPrefix(ChatColor.GOLD+""+jugOnline.getLcoins());
@@ -295,6 +295,131 @@ public class LobbyController{
 			}
 
 		}
+
+		/* Collection<?extends Player> onlineplayers=Bukkit.getOnlinePlayers();
+		for(Player Online:onlineplayers){
+			Scoreboard sb=Online.getScoreboard();
+
+			if(sb==null){
+				sb=Bukkit.getScoreboardManager().getNewScoreboard();
+				Online.setScoreboard(sb);
+
+				if(TEAMS.containsKey("LCoins"+Online.getName())){
+					TEAMS.remove("LCoins"+Online.getName());
+				}
+				if(TEAMS.containsKey("rango"+Online.getName())){
+					TEAMS.remove("rango"+Online.getName());
+				}
+				if(TEAMS.containsKey("vipoints"+Online.getName())){
+					TEAMS.remove("vipoints"+Online.getName());
+				}
+				if(TEAMS.containsKey("lcbox"+Online.getName())){
+					TEAMS.remove("lcbox"+Online.getName());
+				}
+			}
+
+			if(!TEAMS.containsKey("LCoins"+Online.getName())){
+				Team refill=sb.registerNewTeam(ChatColor.GOLD+" ");
+				refill.addEntry(ChatColor.GOLD+" ");
+				TEAMS.put("LCoins"+Online.getName(),refill);
+			}
+			if(!TEAMS.containsKey("rango"+Online.getName())){
+				Team comienza=sb.registerNewTeam(ChatColor.RED+" ");
+				comienza.addEntry(ChatColor.RED+" ");
+				TEAMS.put("rango"+Online.getName(),comienza);
+			}
+			if(!TEAMS.containsKey("vipoints"+Online.getName())){
+				Team jugadores=sb.registerNewTeam(ChatColor.AQUA+" ");
+				jugadores.addEntry(ChatColor.AQUA+" ");
+				TEAMS.put("vipoints"+Online.getName(),jugadores);
+			}
+			if(!TEAMS.containsKey("lcbox"+Online.getName())){
+				Team jugadores=sb.registerNewTeam(ChatColor.BLUE+" ");
+				jugadores.addEntry(ChatColor.BLUE+" ");
+				TEAMS.put("lcbox"+Online.getName(),jugadores);
+			}
+			Objective objGame=sb.getObjective("Lobby");
+			Jugador jugOnline=Jugador.getJugador(Online);
+			Database.loadPlayerCoins_SYNC(jugOnline);
+
+			if(objGame==null){
+				objGame=sb.registerNewObjective("Lobby","dummy");
+
+				objGame.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+				objGame.setDisplayName(formatoScoreboard(LobbyMain.getInstance().getConfig().getString("scoreboard.title", "&6&lMineLC &3&lNetwork"), Online));
+
+				List<String> rows = LobbyMain.getInstance().getConfig().getStringList("scoreboard.content");
+				int x = rows.size();
+
+				for (String row : rows) {
+					objGame.getScore(formatoScoreboard(row, Online)).setScore(x);
+					x--;
+				}
+			}
+
+			TEAMS.get("LCoins"+Online.getName()).setPrefix(ChatColor.GOLD+""+jugOnline.getLcoins());
+			TEAMS.get("rango"+Online.getName()).setPrefix(ChatColor.RED+""+jugOnline.getRank());
+			TEAMS.get("vipoints"+Online.getName()).setPrefix(ChatColor.AQUA+""+jugOnline.getRankpoints());
+			TEAMS.get("lcbox"+Online.getName()).setPrefix(ChatColor.BLUE+""+"0");
+			for(Player tmOnline:onlineplayers){
+				Jugador jugTM=Jugador.getJugador(tmOnline);
+
+				try{
+					Team tm=sb.getTeam(jugTM.getBukkitPlayer().getName());
+
+					if(tm!=null){
+						continue;
+					}
+
+					tm=sb.registerNewTeam(jugTM.getBukkitPlayer().getName());
+
+					if(jugTM.isHideRank())
+						tm.setPrefix(ChatColor.GRAY.toString());
+					else if(jugTM.is_Owner())
+						tm.setPrefix(ChatColor.DARK_RED+""+ChatColor.BOLD+Ranks.OWNER.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_Admin())
+						tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.ADMIN.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_MODERADOR())
+						tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.MOD.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_AYUDANTE())
+						tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.AYUDANTE.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_YOUTUBER()){
+						String youtuber=ChatColor.RED+""+ChatColor.BOLD+"YouTuber ";
+						tm.setPrefix(youtuber+jugTM.getNameTagColor());
+					} else if(jugTM.is_MiniYT()){
+						String miniyt= ChatColor.RED+"" + ChatColor.BOLD + "MiniYT ";
+						tm.setPrefix(miniyt+jugTM.getNameTagColor());
+					}
+					else if(jugTM.is_BUILDER())
+						tm.setPrefix(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+Ranks.BUILDER.name()+" "+jugTM.getNameTagColor());
+					else if(jugTM.is_RUBY())
+						tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.RUBY.name()+" "+jugTM.getNameTagColor());
+					else if(jugTM.is_ELITE())
+						tm.setPrefix(ChatColor.GOLD+""+ChatColor.BOLD+Ranks.ELITE.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_SVIP())
+						tm.setPrefix(ChatColor.GREEN+""+ChatColor.BOLD+Ranks.SVIP.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_VIP())
+						tm.setPrefix(ChatColor.AQUA+""+ChatColor.BOLD+Ranks.VIP.name()+" "
+								+jugTM.getNameTagColor());
+					else if(jugTM.is_Premium())
+						tm.setPrefix(ChatColor.YELLOW.toString());
+					else
+						tm.setPrefix(ChatColor.GRAY.toString());
+
+					tm.addPlayer(tmOnline);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+
+		} */
 	}
 
 	private static String returnduration(Jugador jugOnline) {
@@ -329,39 +454,11 @@ public class LobbyController{
 		p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,Integer.MAX_VALUE,0));
 		p.setWalkSpeed(0.3f);
 
-		//welcome old
-		/*
-		p.sendMessage(ChatColor.GOLD+""+ChatColor.STRIKETHROUGH+"= = = = = = = = = = = = = = = = = = = = = = = =");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.GREEN+""+ChatColor.BOLD+"                      Website: ");
-		p.sendMessage("                      "+ChatColor.AQUA+"http://minelc.com");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.GREEN+""+ChatColor.BOLD+"                      Tienda: ");
-		p.sendMessage("                 "+ChatColor.AQUA+"http://tienda.minelc.com/");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.GOLD+""+ChatColor.STRIKETHROUGH+"= = = = = = = = = = = = = = = = = = = = = = = =");
-		 */
 
 		//welcome
 		for (String s : LobbyMain.getInstance().getConfig().getStringList("welcome")) {
 			p.sendMessage(formatoScoreboard(s, p));
 		}
-		/*
-		p.sendMessage(ChatColor.GOLD+""+ChatColor.BOLD+"================================");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.YELLOW+"        Bienvenido "+ChatColor.GOLD+p.getName()+ChatColor.YELLOW+" a");
-		p.sendMessage("              "+ChatColor.DARK_AQUA+ChatColor.BOLD+"MineLC"+ChatColor.GOLD+ChatColor.BOLD+" Network");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.WHITE+""+ChatColor.BOLD+"                  Sitio Web:");
-		p.sendMessage("              "+ChatColor.AQUA+"https://www.minelc.net/");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.BLUE+""+ChatColor.BOLD+"                  Discord:");
-		p.sendMessage(ChatColor.BLUE+"              discord.minelc.net");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.WHITE+""+ChatColor.BOLD+" Compra los mejores rangos en:");
-		p.sendMessage("           "+ChatColor.AQUA+"tienda.minelc.net");
-		p.sendMessage("");
-		p.sendMessage(ChatColor.GOLD+""+ChatColor.BOLD+"================================"); */
 
 		if(!j.isOpciones_SVS_Enable_Players()){
 			for(Player Online:Bukkit.getOnlinePlayers()){
@@ -372,6 +469,7 @@ public class LobbyController{
 		if(j.isOpciones_SVS_Enabled_Minilobby()){
 			p.sendMessage(ChatColor.GREEN+"Mini-Lobby (Rapido) esta activado, puedes desactivarlo desde el menu de servidores!");
 		}
+
 		/*
 		int onlineCount = Bukkit.getOnlinePlayers().size();
 		if(onlineCount > 60) {
@@ -383,115 +481,7 @@ public class LobbyController{
 			}
 		}
 		*/
-		try{
-			Team tm=null;
-			scoreboard=Bukkit.getScoreboardManager().getNewScoreboard();
-			Objective obj=scoreboard.getObjective("lobby");
-
-			if(obj==null){
-				obj=scoreboard.registerNewObjective("lobby","dummy");
-				obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-				obj.setDisplayName(formatoScoreboard(LobbyMain.getInstance().getConfig().getString("scoreboard.title", "&6&lMineLC &3&lNetwork"), p));
-
-				List<String> rows = LobbyMain.getInstance().getConfig().getStringList("scoreboard.content");
-				int x = rows.size();
-
-				for (String row : rows) {
-					obj.getScore(formatoScoreboard(row, p)).setScore(x);
-					x--;
-				}
-			}
-
-			if(scoreboard.getTeams().contains(scoreboard.getTeam(p.getName()))){
-				tm=scoreboard.getTeam(p.getName());
-			}else{
-				tm=scoreboard.registerNewTeam(p.getName());
-			}
-			if(j.isHideRank())
-				tm.setPrefix(ChatColor.GRAY.toString());
-			else if(j.is_Owner())
-				tm.setPrefix(ChatColor.DARK_RED+""+ChatColor.BOLD+Ranks.OWNER.name()+" "+j.getNameTagColor());
-			else if(j.is_Admin())
-				tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.ADMIN.name()+" "+j.getNameTagColor());
-			else if(j.is_MODERADOR())
-				tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.MOD.name()+" "+j.getNameTagColor());
-			else if(j.is_AYUDANTE())
-				tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.AYUDANTE.name()+" "+j.getNameTagColor());
-			else if(j.is_YOUTUBER()){
-				String youtuber=ChatColor.RED+""+ChatColor.BOLD+"YouTuber ";
-				tm.setPrefix(youtuber+j.getNameTagColor());
-			}
-			else if(j.is_MiniYT()){
-				String miniyt= ChatColor.RED +""+ ChatColor.BOLD + "MiniYT ";
-				tm.setPrefix(miniyt+j.getNameTagColor());
-			}
-			else if(j.is_BUILDER())
-				tm.setPrefix(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+Ranks.BUILDER.name()+" "+j.getNameTagColor());
-			else if(j.is_RUBY())
-				tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.RUBY.name()+" "+j.getNameTagColor());
-			else if(j.is_ELITE())
-				tm.setPrefix(ChatColor.GOLD+""+ChatColor.BOLD+Ranks.ELITE.name()+" "+j.getNameTagColor());
-			else if(j.is_SVIP())
-				tm.setPrefix(ChatColor.GREEN+""+ChatColor.BOLD+Ranks.SVIP.name()+" "+j.getNameTagColor());
-			else if(j.is_VIP())
-				tm.setPrefix(ChatColor.AQUA+""+ChatColor.BOLD+Ranks.VIP.name()+" "+j.getNameTagColor());
-			else if(j.is_Premium())
-				tm.setPrefix(ChatColor.YELLOW.toString());
-			else
-				tm.setPrefix(ChatColor.GRAY.toString());
-
-			tm.addPlayer(p);
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
-
-		if(!j.isOpciones_SVS_Enable_Players()){
-			Scoreboard SBPlayer=Bukkit.getScoreboardManager().getNewScoreboard();
-			try{
-				Objective obj=SBPlayer.registerNewObjective("lobby","dummy");
-				obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-				Team tm=SBPlayer.registerNewTeam(p.getName());
-				if(j.isHideRank())
-					tm.setPrefix(ChatColor.GRAY.toString());
-				else if(j.is_Owner())
-					tm.setPrefix(ChatColor.DARK_RED+""+ChatColor.BOLD+Ranks.OWNER.name()+" "+j.getNameTagColor());
-				else if(j.is_Admin())
-					tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.ADMIN.name()+" "+j.getNameTagColor());
-				else if(j.is_MODERADOR())
-					tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.MOD.name()+" "+j.getNameTagColor());
-				else if(j.is_AYUDANTE())
-					tm.setPrefix(ChatColor.DARK_PURPLE+""+ChatColor.BOLD+Ranks.AYUDANTE.name()+" "+j.getNameTagColor());
-				else if(j.is_YOUTUBER()){
-					String youtuber=ChatColor.RED+""+ChatColor.BOLD+"YouTuber ";
-					tm.setPrefix(youtuber+j.getNameTagColor());
-				}else if(j.is_MiniYT()){
-					String miniyt= ChatColor.RED +""+ ChatColor.BOLD + "MiniYT ";
-					tm.setPrefix(miniyt+j.getNameTagColor());
-				}
-				else if(j.is_BUILDER())
-					tm.setPrefix(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+Ranks.BUILDER.name()+" "+j.getNameTagColor());
-				else if(j.is_RUBY())
-					tm.setPrefix(ChatColor.RED+""+ChatColor.BOLD+Ranks.RUBY.name()+" "+j.getNameTagColor());
-				else if(j.is_ELITE())
-					tm.setPrefix(ChatColor.GOLD+""+ChatColor.BOLD+Ranks.ELITE.name()+" "+j.getNameTagColor());
-				else if(j.is_SVIP())
-					tm.setPrefix(ChatColor.GREEN+""+ChatColor.BOLD+Ranks.SVIP.name()+" "+j.getNameTagColor());
-				else if(j.is_VIP())
-					tm.setPrefix(ChatColor.AQUA+""+ChatColor.BOLD+Ranks.VIP.name()+" "+j.getNameTagColor());
-				else if(j.is_Premium())
-					tm.setPrefix(ChatColor.YELLOW.toString());
-				else
-					tm.setPrefix(ChatColor.GRAY.toString());
-
-				tm.addPlayer(p);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
-			j.getBukkitPlayer().setScoreboard(SBPlayer);
-		}else{
-			j.getBukkitPlayer().setScoreboard(scoreboard);
-		}
+		createScoreboard(p);
 	}
 
 	private static IconMenu getInvStats_HG_kills(){
@@ -1691,7 +1681,7 @@ public class LobbyController{
 
 	public static IconMenu updateInvSelector(){
 		if(invSelector==null){
-			invSelector=new IconMenu(ChatColor.translateAlternateColorCodes('&',"&a&lServidores"),54,new IconMenu.OptionClickEventHandler(){
+			invSelector=new IconMenu("Servidores",54,new IconMenu.OptionClickEventHandler(){
 				public void onOptionClick(IconMenu.OptionClickEvent e){
 					e.setWillClose(false);
 					e.setWillDestroy(false);
@@ -1814,77 +1804,75 @@ public class LobbyController{
 
 		return count;
 	}
+
 	public static IconMenu redesSociales(){
 		if(invRedes==null){
-			invRedes=new IconMenu(ChatColor.BOLD+""+ChatColor.GREEN+"Redes Sociales",54,new IconMenu.OptionClickEventHandler(){
+			invRedes = new IconMenu("Redes sociales",9,new IconMenu.OptionClickEventHandler(){
 				public void onOptionClick(IconMenu.OptionClickEvent e){
 					e.setWillClose(false);
 					e.setWillDestroy(false);
-					switch(e.getPosition()){
-                   /* case 11:
-             puentes  ((MobsController)MobsController.getAll().get("mob6")).openInventory(e.getPlayer());
-                        break; */
-						case 20:
-							e.getPlayer().closeInventory();
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fComunicate con nosotros vía Facebook"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fEnterate de las novedades, información y publicaciones"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&frelacionadas con el servidor en:"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&Esto estará muy pronto."));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-
+					Player pp = e.getPlayer();
+					pp.closeInventory();
+					switch(e.getPosition()) {
+						case 1: // Facebook
+							for (String str : LobbyMain.getInstance().getConfig().getStringList("social-media.facebook.lines")) {
+								pp.sendMessage(ChatColor.translateAlternateColorCodes('&', str));
+							}
 							break;
-						case 22:
-							e.getPlayer().closeInventory();
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fSiguenos en nuestro twitter oficial"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fParticipa de sorteos, eventos y"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fenterate de nuevas modalidades"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fsiguenos en @MineLCNetwork"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-
+						case 3: // Twitter
+							for (String str : LobbyMain.getInstance().getConfig().getStringList("social-media.twitter.lines")) {
+								pp.sendMessage(ChatColor.translateAlternateColorCodes('&', str));
+							}
 							break;
-						case 24:
-							e.getPlayer().closeInventory();
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fForma parte de nuestro servidor de discord"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fpuedes hablar con la comunidad, realizar reportes"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fescuchar música y jugar en llamada!!"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&ediscord.minelc.net"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-
+						case 5: // Discord
+							for (String str : LobbyMain.getInstance().getConfig().getStringList("social-media.discord.lines")) {
+								pp.sendMessage(ChatColor.translateAlternateColorCodes('&', str));
+							}
 							break;
-						case 31:
-							e.getPlayer().closeInventory();
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fVisita nuestro foro oficial"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fReporta usuarios ilegales, comparte tus ideas"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&fe informate de las novedades del servidor en:"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&ewww.minelc.net"));
-							e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&m----------------------------------"));
-
+						case 7: // Forum
+							for (String str : LobbyMain.getInstance().getConfig().getStringList("social-media.forum.lines")) {
+								pp.sendMessage(ChatColor.translateAlternateColorCodes('&', str));
+							}
 							break;
-
 					}
-
 				}
 			},LobbyMain.getInstance());
 		}
 
-		// invSelector.setOption(11, new ItemStack(Material.BRICK, 1), "" + ChatColor.GREEN + ChatColor.BOLD + "Los Puentes", new String[]{"", ChatColor.GRAY + "Equipos de 1vs1, 2vs2 y 4vs4.", ChatColor.GRAY + "Para ganar debes tirarte en el portal enemigo ", ChatColor.GRAY + "pero cuidado, no olvides proteger el tuyo!", "", ChatColor.BOLD +"" +ChatColor.DARK_RED + "!Modalidad Beta! ","",ChatColor.YELLOW + "Hay " + countPlayersInServer("puentes") + " Jugadores.","", ChatColor.YELLOW + "Click para abrir el menu de arenas!"});
-		invRedes.setOption(20,facebook,""+ChatColor.translateAlternateColorCodes('&',"&9&lFacebook"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Siguenos en Facebook :","",ChatColor.GOLD+"www.facebook.com/MinelcServer"});
-		invRedes.setOption(22,twitter,""+ChatColor.translateAlternateColorCodes('&',"&b&lTwitter"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Buscanos en Twitter como:","",ChatColor.GOLD+"@MineLCNetwork"});
-		invRedes.setOption(24,discord,""+ChatColor.translateAlternateColorCodes('&',"&5&lDiscord"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Se parte de nuestro Discord: ","",ChatColor.GOLD+"https://discord.gg/K7JPM8E"});
-		invRedes.setOption(31,foro,""+ChatColor.translateAlternateColorCodes('&',"&8&lForo"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Visita nuestro foro:","",ChatColor.GOLD+"www.minelc.net"});
+		// Facebook
+		invRedes.setOption(1,facebook,
+				"" + ChatColor.translateAlternateColorCodes('&',"&9&lFacebook"),
+				"", ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),
+				ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString("social-media.facebook.username", "@MinelcServer"),
+				ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString("social-media.facebook.link", "mine.lc/facebook"));
+
+		// Twitter
+		invRedes.setOption(3,twitter,
+				"" + ChatColor.translateAlternateColorCodes('&',"&b&lTwitter"),
+				"", ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),
+				ChatColor.WHITE + "Encuéntranos en Twitter como",
+				ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString("social-media.twitter.username", "@MineLCNetwork"),
+				ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString("social-media.twitter.link", "mine.lc/twitter"));
+
+		// Discord
+		invRedes.setOption(5,discord,
+				"" + ChatColor.translateAlternateColorCodes('&',"&5&lDiscord"),
+				"", ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),
+				ChatColor.WHITE+"Se parte de nuestro Discord:",
+				"",
+				ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString("social-media.discord.link", "mine.lc/discord"));
+
+		// Foro
+		invRedes.setOption(7,foro,""+ChatColor.translateAlternateColorCodes('&',"&8&lForo"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Visita nuestro foro:","",ChatColor.GOLD+"www.minelc.net"});
 
 
 		//glass
-		int i;
+		/* int i;
 		for(i=0;i<=54;i++){
 			if(i>=0&&i<=8||i>=45&&i<=53||i==9||i==18||i==27||i==36||i==17||i==26||i==35||i==44){
 				invRedes.setOption(i,Glass,""+ChatColor.translateAlternateColorCodes('&',"&3&lMineLC &6&lNetwork"),new String[]{"",ChatColor.YELLOW+"www.minelc.net"});
 			}
-		}
+		} */
 
 
 		return invRedes;
@@ -1905,36 +1893,54 @@ public class LobbyController{
 	}
 
 	public static IconMenu getInvRangos(Player p){
-		Jugador j=Jugador.getJugador(p);
+		Jugador j = Jugador.getJugador(p);
 
-		IconMenu invRangos=new IconMenu("Men� De Rangos",45,new IconMenu.OptionClickEventHandler(){
+		IconMenu invRangos = new IconMenu("Rangos",45,new IconMenu.OptionClickEventHandler(){
 			@Override
 			public void onOptionClick(IconMenu.OptionClickEvent e){
 				e.setWillClose(false);
 				e.setWillDestroy(true);
-				if(e.getPosition()==11){
-					getInvRangoVIP(e.getPlayer()).open(e.getPlayer());
-				}else if(e.getPosition()==13){
-					getInvRangoSVIP(e.getPlayer()).open(e.getPlayer());
-				}else if(e.getPosition()==15){
-					getInvRangoElite(e.getPlayer()).open(e.getPlayer());
-				}else if(e.getPosition()==22){
-					getInvRangoRuby(e.getPlayer()).open(e.getPlayer());
-				}else{
-					e.setWillClose(true);
-					e.getPlayer().sendMessage(ChatColor.GREEN+"M�s informaci�n sobre los rangos en "+ChatColor.GOLD+"tienda.minelc.net");
+				switch (e.getPosition()) {
+					case 14:
+						// getInvRangoVIP(e.getPlayer()).open(e.getPlayer());
+						getBuyInvRango(e.getPlayer(), Ranks.VIP).open(e.getPlayer());
+						break;
+					case 16:
+						// getInvRangoSVIP(e.getPlayer()).open(e.getPlayer());
+						getBuyInvRango(e.getPlayer(), Ranks.SVIP).open(e.getPlayer());
+						break;
+					case 32:
+						// getInvRangoElite(e.getPlayer()).open(e.getPlayer());
+						getBuyInvRango(e.getPlayer(), Ranks.ELITE).open(e.getPlayer());
+						break;
+					case 34:
+						// getInvRangoRuby(e.getPlayer()).open(e.getPlayer());
+						getBuyInvRango(e.getPlayer(), Ranks.RUBY).open(e.getPlayer());
+						break;
+					default:
+						e.setWillClose(true);
+						e.getPlayer().sendMessage(ChatColor.GREEN+"Más información sobre los rangos en "+ChatColor.GOLD+"tienda.minelc.net");
 				}
 			}
 		},LobbyMain.getInstance(),true)
-				.setOption(11,new ItemStack(Material.IRON_INGOT,1),ChatColor.AQUA+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango VIP","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.AQUA+ChatColor.BOLD+"VIP",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para VIP\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
-				.setOption(13,new ItemStack(Material.GOLD_INGOT,1),ChatColor.GREEN+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango SVIP","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.AQUA+ChatColor.BOLD+"VIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.GREEN+ChatColor.BOLD+"SVIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para SVIP\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
-				.setOption(15,new ItemStack(Material.DIAMOND,1),ChatColor.GOLD+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango ELITE","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.GREEN+ChatColor.BOLD+"SVIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.GOLD+ChatColor.BOLD+"ELITE.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para ELITE\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
-				.setOption(22,new ItemStack(Material.EMERALD,1),ChatColor.RED+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango RUBY","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.GOLD+ChatColor.BOLD+"ELITE.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.RED+ChatColor.BOLD+"RUBY.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para RUBY\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
+				.setOption(14,new ItemStack(Material.IRON_INGOT,1),ChatColor.AQUA+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango VIP","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.AQUA+ChatColor.BOLD+"VIP",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para VIP\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
+				.setOption(16,new ItemStack(Material.GOLD_INGOT,1),ChatColor.GREEN+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango SVIP","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.AQUA+ChatColor.BOLD+"VIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.GREEN+ChatColor.BOLD+"SVIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para SVIP\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
+				.setOption(32,new ItemStack(Material.DIAMOND,1),ChatColor.GOLD+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango ELITE","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.GREEN+ChatColor.BOLD+"SVIP.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.GOLD+ChatColor.BOLD+"ELITE.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para ELITE\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �")
+				.setOption(34,new ItemStack(Material.EMERALD,1),ChatColor.RED+""+ChatColor.BOLD+ChatColor.UNDERLINE+"Rango RUBY","",ChatColor.GREEN+""+ChatColor.BOLD+"Beneficios:",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Todos los beneficios del rango "+ChatColor.GOLD+ChatColor.BOLD+"ELITE.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Prefijo "+ChatColor.RED+ChatColor.BOLD+"RUBY.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso en todos los servidores a todos los",ChatColor.YELLOW+"  articulos que contengan \"solo para RUBY\".",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Acceso prioritario al servidor.",ChatColor.DARK_GRAY+"- "+ChatColor.YELLOW+"Y mas..","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
 
-		if((j.getRank()==Ranks.VIP||j.getRank()==Ranks.SVIP||j.getRank()==Ranks.ELITE)||j.getRank()==Ranks.RUBY){
-			invRangos.setOption(31,new ItemUtils(p.getName(),1),ChatColor.GREEN+"Informaci�n Del Rango",ChatColor.GRAY+"Rango: "+ChatColor.GOLD+j.getRank().name(),ChatColor.GRAY+"Duraci�n: "+ChatColor.GOLD+getDuration(j.getRankduration()),ChatColor.GRAY+"VIP-Points: "+ChatColor.GOLD+j.getRankpoints());
-		}else{
-			invRangos.setOption(31,new ItemUtils(p.getName(),1),ChatColor.GREEN+"Informaci�n Del Rango",ChatColor.GRAY+"Rango: "+ChatColor.GOLD+j.getRank().toString(),ChatColor.GRAY+"VIP-Points: "+ChatColor.GOLD+j.getRankpoints());
+		if(j.getRank().getImportance() >= 100) {
+			String rankString = getDuration(j.getRankduration()).isEmpty() ? "Permanente" : getDuration(j.getRankduration());
+			invRangos.setOption(10,new ItemUtils(p.getName(),1),ChatColor.GREEN+"Información",ChatColor.GRAY+"Rango: "+ChatColor.GOLD+j.getRank().name(),ChatColor.GRAY+"Duración: "+ChatColor.GOLD+ rankString);
+		} else{
+			invRangos.setOption(10,new ItemUtils(p.getName(),1),ChatColor.GREEN+"Información",ChatColor.GRAY+"Rango: "+ChatColor.GOLD+j.getRank().name());
+		}
+
+		invRangos.setOption(28,new ItemStack(Material.DOUBLE_PLANT,1),ChatColor.AQUA+"VIP-Points", ChatColor.GRAY + "Tienes " + j.getRankpoints() + " " + LobbyMain.getIconVar("vip"));
+
+		ArrayList<Integer> lista = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 9, 11, 12, 18, 19, 20, 21, 27, 29, 30, 36, 37, 38, 39));
+
+		for (Integer numero : lista) {
+			invRangos.setOption(numero, new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7), ChatColor.GRAY + " ");
 		}
 
 		return invRangos;
@@ -1949,11 +1955,11 @@ public class LobbyController{
 
 		if(time2>2880){
 			time2=time2/24/60;
-			duracion=(int)time2+" dias, ";
+			duracion=(int)time2+" días, ";
 			time2=(time2-(int)time2)*24*60;
 		}else if(time2>1440){
 			time2=time2/24/60;
-			duracion=(int)time2+" dia, ";
+			duracion=(int)time2+" día, ";
 			time2=(time2-(int)time2)*24*60;
 		}
 
@@ -1980,324 +1986,81 @@ public class LobbyController{
 		return duracion;
 	}
 
-	private static IconMenu getInvRangoVIP(Player p){
-		final Jugador j=Jugador.getJugador(p);
 
-		IconMenu invRangoVIP=new IconMenu("Comprar Rango VIP",27,new IconMenu.OptionClickEventHandler(){
+	private static IconMenu getBuyInvRango(Player p, Ranks rank) {
+		final Jugador j = Jugador.getJugador(p);
+		String rankString = rank.toString().toLowerCase();
+
+		IconMenu BuyInvRango = new IconMenu("Comprar rango " + rankString.toUpperCase(),27, new IconMenu.OptionClickEventHandler(){
 			@Override
-			public void onOptionClick(IconMenu.OptionClickEvent e){
-				if(e.getPosition()==11){
-					if(j.getRankpoints()>=150){
-						j.removeRankpoints(150);
-						if(j.getRank()==Ranks.VIP){
-							j.addRankduration(604800000);
-						}else{
-							j.setRank(Ranks.VIP);
-							j.setRankduration(604800000);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==13){
-					if(j.getRankpoints()>=300){
-						j.removeRankpoints(300);
-						if(j.getRank()==Ranks.VIP){
-							j.addRankduration(1296000000);
-						}else{
-							j.setRank(Ranks.VIP);
-							j.setRankduration(1296000000);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==15){
-					if(j.getRankpoints()>=500){
-						j.removeRankpoints(500);
-						if(j.getRank()==Ranks.VIP){
-							j.addRankduration(2592000000L);
-						}else{
-							j.setRank(Ranks.VIP);
-							j.setRankduration(2592000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
+			public void onOptionClick(IconMenu.OptionClickEvent e) {
+				Player pp = e.getPlayer();
+				switch (e.getPosition()) {
+					case 11: // 7 días
+						updateRankVIPPoints(pp, rank, 7);
+						break;
+					case 13: // 15 días
+						updateRankVIPPoints(pp, rank, 15);
+						break;
+					case 15: // 30 días
+						updateRankVIPPoints(pp, rank, 30);
+						break;
 				}
 				e.setWillDestroy(true);
 			}
 		},LobbyMain.getInstance(),true);
 
-		if(j.getRankpoints()>=150){
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$1.5 EUR � 150 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$1.5 EUR � 150 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
+		String coloredRank;
+		switch (rank) {
+			case VIP:
+				coloredRank = ChatColor.translateAlternateColorCodes('&', "&b&lVIP");
+				break;
+			case SVIP:
+				coloredRank = ChatColor.translateAlternateColorCodes('&', "&a&lSVIP");
+				break;
+			case ELITE:
+				coloredRank = ChatColor.translateAlternateColorCodes('&', "&6&lELITE");
+				break;
+			case RUBY:
+				coloredRank = ChatColor.translateAlternateColorCodes('&', "&c&lRUBY");
+				break;
+			default:
+				coloredRank = ChatColor.translateAlternateColorCodes('&', "&4&l404");
 		}
 
-		if(j.getRankpoints()>=300){
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$3 EUR � 300 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$3 EUR � 300 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		if(j.getRankpoints()>=500){
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$5 EUR � 500 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.AQUA+""+ChatColor.BOLD+"Rango VIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$5 EUR � 500 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		return invRangoVIP;
-	}
-
-	private static IconMenu getInvRangoSVIP(Player p){
-		final Jugador j=Jugador.getJugador(p);
-
-		IconMenu invRangoVIP=new IconMenu("Comprar Rango SVIP",27,new IconMenu.OptionClickEventHandler(){
-			@Override
-			public void onOptionClick(IconMenu.OptionClickEvent e){
-				if(e.getPosition()==11){
-					if(j.getRankpoints()>=300){
-						j.removeRankpoints(300);
-						if(j.getRank()==Ranks.SVIP){
-							j.addRankduration(604800000);
-						}else{
-							j.setRank(Ranks.SVIP);
-							j.setRankduration(604800000);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==13){
-					if(j.getRankpoints()>=600){
-						j.removeRankpoints(600);
-						if(j.getRank()==Ranks.SVIP){
-							j.addRankduration(1296000000);
-						}else{
-							j.setRank(Ranks.SVIP);
-							j.setRankduration(1296000000);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==15){
-					if(j.getRankpoints()>=1000){
-						j.removeRankpoints(1000);
-						if(j.getRank()==Ranks.SVIP){
-							j.addRankduration(2592000000L);
-						}else{
-							j.setRank(Ranks.SVIP);
-							j.setRankduration(2592000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}
-				e.setWillDestroy(true);
-			}
-		},LobbyMain.getInstance(),true);
-
-		if(j.getRankpoints()>=300){
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$3 EUR � 300 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$3 EUR � 300 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		if(j.getRankpoints()>=600){
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$6 EUR � 600 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$6 EUR � 600 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		if(j.getRankpoints()>=1000){
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$10 EUR � 1000 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GREEN+""+ChatColor.BOLD+"Rango SVIP"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$10 EUR � 1000 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		return invRangoVIP;
-	}
-
-	public static IconMenu getInvRangoRuby(Player p){
-		final Jugador j=Jugador.getJugador(p);
-		IconMenu invRangoRuby=new IconMenu("Comprar rango Ruby",27,new IconMenu.OptionClickEventHandler(){
-			@Override
-			public void onOptionClick(IconMenu.OptionClickEvent e){
-				if(e.getPosition()==11){
-					if(j.getRankpoints()>=1000){
-						j.removeRankpoints(1000);
-						if(j.getRank()==Ranks.RUBY){
-							j.addRankduration(604800000L);
-						}else{
-							j.setRank(Ranks.RUBY);
-							j.setRankduration(604800000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==13){
-					if(j.getRankpoints()>=1700){
-						j.removeRankpoints(1700);
-						if(j.getRank()==Ranks.RUBY){
-							j.addRankduration(1296000000L);
-						}else{
-							j.setRank(Ranks.RUBY);
-							j.setRankduration(1296000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==15){
-					if(j.getRankpoints()>=2300){
-						j.removeRankpoints(2300);
-						if(j.getRank()==Ranks.RUBY){
-							j.addRankduration(2592000000L);
-						}else{
-							j.setRank(Ranks.RUBY);
-							j.setRankduration(2592000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}
-				e.setWillDestroy(true);
-			}
-		},LobbyMain.getInstance(),true);
 
 
-		if(j.getRankpoints()>=1000){
-			invRangoRuby.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"1000 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoRuby.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"1000 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
+		BuyInvRango.setOption(11,
+				new ItemStack(Material.WATCH, 7),
+				ChatColor.GRAY + "Rango " + coloredRank + ChatColor.DARK_GRAY + " - "+ChatColor.GRAY+ChatColor.BOLD+"7 días",
+				"",
+				ChatColor.GREEN+"Duración: "+ChatColor.GOLD+"7 días",
+				"",
+				ChatColor.GREEN+"Precio: " + ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".7d.precio")) + " ó " + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".7d.vippoints")) + " VIP-Points " + LobbyMain.getIconVar("vip"),
+				"",
+				ChatColor.BLUE+""+ChatColor.BOLD+"¡Haz click para comprar!");
 
-		if(j.getRankpoints()>=1700){
-			invRangoRuby.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"1700 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoRuby.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"1700 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
+		BuyInvRango.setOption(13,
+				new ItemStack(Material.WATCH, 15),
+				ChatColor.GRAY + "Rango " + coloredRank + ChatColor.DARK_GRAY + " - "+ChatColor.GRAY+ChatColor.BOLD+"15 días",
+				"",
+				ChatColor.GREEN+"Duración: "+ChatColor.GOLD+"15 días",
+				"",
+				ChatColor.GREEN+"Precio: " + ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".15d.precio")) + " ó " + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".15d.vippoints")) + " VIP-Points " + LobbyMain.getIconVar("vip"),
+				"",
+				ChatColor.BLUE+""+ChatColor.BOLD+"¡Haz click para comprar!");
 
-		if(j.getRankpoints()>=2300){
-			invRangoRuby.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"2300 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoRuby.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GOLD+""+ChatColor.BOLD+"Rango RUBY"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"2300 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
+		BuyInvRango.setOption(15,
+				new ItemStack(Material.WATCH, 30),
+				ChatColor.GRAY + "Rango " + coloredRank + ChatColor.DARK_GRAY + " - "+ChatColor.GRAY+ChatColor.BOLD+"30 días",
+				"",
+				ChatColor.GREEN+"Duración: "+ChatColor.GOLD+"30 días",
+				"",
+				ChatColor.GREEN+"Precio: " + ChatColor.GOLD + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".30d.precio")) + " ó " + LobbyMain.getInstance().getConfig().getString(("tienda." + rankString + ".30d.vippoints")) + " VIP-Points " + LobbyMain.getIconVar("vip"),
+				"",
+				ChatColor.BLUE+""+ChatColor.BOLD+"¡Haz click para comprar!");
 
-		return invRangoRuby;
-	}
-
-	private static IconMenu getInvRangoElite(Player p){
-		final Jugador j=Jugador.getJugador(p);
-
-		IconMenu invRangoVIP=new IconMenu("Comprar Rango Elite",27,new IconMenu.OptionClickEventHandler(){
-			@Override
-			public void onOptionClick(IconMenu.OptionClickEvent e){
-				if(e.getPosition()==11){
-					if(j.getRankpoints()>=450){
-						j.removeRankpoints(450);
-						if(j.getRank()==Ranks.ELITE){
-							j.addRankduration(604800000L);
-						}else{
-							j.setRank(Ranks.ELITE);
-							j.setRankduration(604800000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==13){
-					if(j.getRankpoints()>=900){
-						j.removeRankpoints(900);
-						if(j.getRank()==Ranks.ELITE){
-							j.addRankduration(1296000000L);
-						}else{
-							j.setRank(Ranks.ELITE);
-							j.setRankduration(1296000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}else if(e.getPosition()==15){
-					if(j.getRankpoints()>=1500){
-						j.removeRankpoints(1500);
-						if(j.getRank()==Ranks.ELITE){
-							j.addRankduration(2592000000L);
-						}else{
-							j.setRank(Ranks.ELITE);
-							j.setRankduration(2592000000L);
-						}
-						Database.savePlayerRank(j);
-						e.getPlayer().sendMessage(ChatColor.GREEN+"Rango comprado con exito!");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
-					}else{
-						e.getPlayer().sendMessage(ChatColor.RED+"No tienes suficientes "+ChatColor.AQUA+"VIP-Points "+ChatColor.RED+"para comprar este rango. Visita "+ChatColor.GOLD+"http://tienda.minelc.com"+ChatColor.RED+" para que puedas obtener este rango.");
-						e.getPlayer().playSound(e.getPlayer().getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
-					}
-				}
-				e.setWillDestroy(true);
-			}
-		},LobbyMain.getInstance(),true);
-
-		if(j.getRankpoints()>=450){
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$4.5 EUR � 450 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(11,new ItemStack(Material.WATCH,7),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"7 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"7 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$4.5 EUR � 450 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		if(j.getRankpoints()>=900){
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$9 EUR � 900 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(13,new ItemStack(Material.WATCH,15),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"15 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"15 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$9 EUR � 900 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		if(j.getRankpoints()>=1500){
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$15 EUR � 1500 VIP-Points","",ChatColor.BLUE+""+ChatColor.BOLD+"� Click Para Comprar �");
-		}else{
-			invRangoVIP.setOption(15,new ItemStack(Material.WATCH,30),ChatColor.GOLD+""+ChatColor.BOLD+"Rango ELITE"+ChatColor.DARK_GRAY+" - "+ChatColor.GRAY+ChatColor.BOLD+"30 Dias","",ChatColor.GREEN+"Duracion: "+ChatColor.GOLD+"30 Dias.","",ChatColor.GREEN+"Precio: "+ChatColor.GOLD+"$15 EUR � 1500 VIP-Points","",ChatColor.RED+"Actualmente tienes "+j.getRankpoints()+" VIP-Points, Visita",ChatColor.GOLD+"http://tienda.minelc.com/"+ChatColor.RED+" para comprar mas!");
-		}
-
-		return invRangoVIP;
+		return BuyInvRango;
 	}
 
 	public static IconMenu getInvVanidad(Player player){
@@ -2771,5 +2534,226 @@ public class LobbyController{
 		s = PlaceholderAPI.setPlaceholders(p, s);
 		s = ChatColor.translateAlternateColorCodes('&', s);
 		return s;
+	}
+
+	public static void updateRankVIPPoints(Player p, Ranks comprara, int dias) {
+		Jugador j = Jugador.getJugador(p);
+		String searchday = dias + "d";
+		String rango = comprara.toString().toLowerCase();
+
+		// Si la importancia de su actual rango es mayor que
+		// la que comprará (tiene ELITE y compra VIP), no se hará efectiva la entrega
+		if (j.getRank().getImportance() > comprara.getImportance()) {
+			p.sendMessage(ChatColor.RED +"¡Estás intentando comprar un rango menor a tu rango actual!");
+			p.playSound(p.getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
+		} else {
+			String path = "tienda." + rango + "." + searchday + ".vippoints";
+			int vippoints = LobbyMain.getInstance().getConfig().getInt(path, 0);
+			long milisegundos = ((long) (dias)) * 86400000L;
+
+			if (vippoints == 0) {
+				p.sendMessage(ChatColor.RED + "¡Ocurrió un error! Por favor abre un tiquete y reporta esto");
+				p.sendMessage(ChatColor.RED + "[Debug] Path " + path + ".vippoints returns 0 or default value.");
+				p.playSound(p.getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
+				return;
+			};
+
+			if (j.getRankpoints() < vippoints) {
+				p.sendMessage(ChatColor.RED + "¡No tienes suficientes VIP-Points para comprar este artículo!");
+				p.sendMessage(ChatColor.YELLOW + "¡Gana VIP-Points en eventos o comprando en la tienda" + ChatColor.GOLD + "tienda.minelc.net" + ChatColor.YELLOW + "!");
+				p.playSound(p.getLocation(),Sound.VILLAGER_NO,1.2F,1.2F);
+				return;
+			}
+
+			j.removeRankpoints(vippoints);
+
+			if (j.getRank() == comprara) {
+				j.addRankduration(milisegundos);
+				p.sendMessage(ChatColor.GREEN + "Agregaste " + ChatColor.YELLOW + dias + " días" + ChatColor.GREEN + " a tu rango.");
+			} else {
+				j.setRank(comprara);
+				j.setRankduration(milisegundos);
+				p.sendMessage(ChatColor.GREEN + "Compraste " + ChatColor.YELLOW + comprara.toString().toUpperCase() + " - " + dias + " días" + ChatColor.GREEN + " con éxito.");
+			}
+
+			p.playSound(p.getLocation(),Sound.VILLAGER_YES,1.2F,1.2F);
+			Database.savePlayerRank(j);
+
+			for (Player pp : LobbyController.scoreboardsLibs.keySet()) {
+				LobbyController.scoreboardsLibs.get(pp).updatePublic();
+			}
+
+			Bukkit.getScheduler().runTaskLater(LobbyMain.getInstance(), new Runnable() {
+				@Override
+				public void run() {
+					p.kickPlayer(ChatColor.GREEN + "¡Reconéctate para efectuar los cambios!");
+				}
+			}, 60L);
+		}
+	}
+
+	public static IconMenu MenuOpciones(Player p , final Player target) {
+		de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayer pafp = de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayerManager.getInstance().getPlayer(p.getName());
+		de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayer paft = PAFPlayerManager.getInstance().getPlayer(target.getName());
+		IconMenu invMinigame = new IconMenu(ChatColor.BOLD + "" + ChatColor.DARK_GRAY + "Opciones para " + target.getName(),27, new IconMenu.OptionClickEventHandler() {
+			public void onOptionClick(IconMenu.OptionClickEvent e) {
+				e.setWillClose(true);
+				e.setWillDestroy(false);
+				switch(e.getPosition()) {
+					case 11:
+						/*PARTY */
+						PartyFriendsAPI.inviteIntoParty(p, target.getName());
+						break;
+					case 13:
+						if (pafp.isAFriendOf(paft)) {
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&5&lFriends &7Ya eres amigo de &e" + target.getName() + "&7."));
+							break;
+						} else if (paft.hasRequestFrom(pafp)) {
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&5&lFriends &7Ya le has enviado una solicitud de amistad a este jugador."));
+							break;
+						} else {
+							PartyFriendsAPI.sendOrAcceptFriendRequest(p,target.getName());
+							break;
+						}
+						/*friend */
+					case 15:
+						e.setWillClose(false);
+						e.setWillDestroy(false);
+						openAnvil(p, target.getName());
+				}
+			}
+		}, LobbyMain.getInstance());
+
+		invMinigame.setOption(11, new ItemStack(Material.REDSTONE_COMPARATOR,1),"" + ChatColor.translateAlternateColorCodes('&', "&6Party Invite"), new String[]{ChatColor.translateAlternateColorCodes('&', "&7Invitar a este jugador a tu Party"), " ", ChatColor.GREEN + "Click derecho para seleccionar"});
+		if (pafp.isAFriendOf(paft)) {
+			invMinigame.setOption(13, new ItemStack(Material.PAPER, 1), "" + ChatColor.translateAlternateColorCodes('&', "&6Enviar solicitud de amistad"), new String[]{ChatColor.translateAlternateColorCodes('&', "&7Envía o acepta una solicitud de amistad."), " ", ChatColor.RED + "Ya eres amigo de esta persona"});
+		} else {
+			invMinigame.setOption(13, new ItemStack(Material.PAPER, 1), "" + ChatColor.translateAlternateColorCodes('&', "&6Enviar solicitud de amistad"), new String[]{ChatColor.translateAlternateColorCodes('&', "&7Envia o acepta una solicitud de amistad."), " ", ChatColor.GREEN + "Click derecho para seleccionar"});
+		}
+		invMinigame.setOption(15,
+				new ItemStack(Material.DOUBLE_PLANT,1),
+				"" + ChatColor.translateAlternateColorCodes('&', "&bEnviar VIP-Points"),
+				ChatColor.translateAlternateColorCodes('&', "&7Regala VIP-Points a este usuario"),
+				ChatColor.GRAY + "Serán descontados de tu cartera.",
+				" ",
+				ChatColor.GREEN + "Click derecho para seleccionar");
+
+		return invMinigame;
+	}
+
+	public static void openAnvil(Player p, String toPay) {
+		Player toPayPlayer = Bukkit.getPlayer(toPay);
+		if (toPayPlayer == null) {
+			p.sendMessage(ChatColor.RED + "¡El jugador está desconectado o no fue encontrado!");
+			return;
+		}
+
+		AnvilGUI gui = new AnvilGUI(p, new AnvilGUI.AnvilClickEventHandler() {
+			@Override
+			public void onAnvilClick(AnvilGUI.AnvilClickEvent event) {
+				if (event.getSlot() == AnvilGUI.AnvilSlot.OUTPUT) {
+					event.setWillClose(true);
+					event.setWillDestroy(true);
+					sendVIPPoints(p, toPayPlayer, event.getName());
+				} else {
+					event.setWillClose(false);
+					event.setWillDestroy(false);
+				}
+			}
+		});
+
+		ItemStack its = new ItemStack(Material.DOUBLE_PLANT);
+		ItemMeta itsm = its.getItemMeta();
+		itsm.setDisplayName(" ");
+		its.setItemMeta(itsm);
+		
+		gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, its);
+
+		gui.open();
+	}
+
+	public static void sendVIPPoints(Player p, Player toSend, String input) {
+		input = input.replaceAll("\\s+","");
+
+		if (!isNumeric(input)) {
+			p.sendMessage(ChatColor.RED + "No es número. Debes colocar la cantidad de VIP-Points que quieres enviar.");
+			return;
+		}
+
+		int inputNumber = Integer.parseInt(input);
+
+		if (!(inputNumber % 10 == 0)) {
+			p.sendMessage(ChatColor.RED + "Sólo puedes enviar cantidades de VIP-Points múltiplos de 10.");
+			return;
+		}
+		Bukkit.getLogger().info("[Debug] El usuario " + p.getName() + " intenta enviar " + inputNumber + " a " + toSend.getName());
+
+		Jugador pj = Jugador.getJugador(p);
+		if (pj.getRankpoints() < inputNumber) {
+			p.sendMessage(ChatColor.RED + "No tienes esta cantidad de VIP-Points.");
+			return;
+		}
+		if (inputNumber <= 0) {
+			p.sendMessage(ChatColor.RED + "Jaja, esto antes funcionaba. Pero no, no puedes enviar valores negativos o 0 VIP-Points");
+			return;
+		}
+		if (p == toSend) {
+			p.sendMessage(ChatColor.GREEN + "¡Qué detalle! Acabas de enviarte a ti mismo " + ChatColor.YELLOW + "" + inputNumber + " VIP-Points");
+			return;
+		}
+		pj.removeRankpoints(inputNumber);
+
+		Jugador pts = Jugador.getJugador(toSend);
+		pts.addRankpoints(inputNumber);
+
+		Database.savePlayerRank(pj);
+		Database.savePlayerRank(pts);
+		p.sendMessage(ChatColor.GREEN + "Has enviado " + ChatColor.YELLOW + "" + inputNumber + " VIP-Points" + ChatColor.GREEN + " a " + toSend.getName());
+		toSend.sendMessage(ChatColor.GREEN + "Has recibido " + ChatColor.YELLOW + "" + inputNumber + " VIP-Points" + ChatColor.GREEN + " por parte de " + p.getName());
+
+		// updateScoreboardPreGame();
+		// updateScoreboardPreGame();
+		for (Player pp : LobbyController.scoreboardsLibs.keySet()) {
+			LobbyController.scoreboardsLibs.get(pp).updatePublic();
+		}
+	}
+
+	public static boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false;
+		}
+		try {
+			int d = Integer.parseInt(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
+	public static List<me.tigerhix.lib.scoreboard.type.Entry> formatScoreboardLib(Player p) {
+		EntryBuilder builder = new EntryBuilder();
+		List<String> lines = LobbyMain.getInstance().getConfig().getStringList("scoreboard.content");//
+		for (String line : lines) {
+			builder.next(formatoScoreboard(line, p));
+		}
+		return builder.build();
+	}
+
+	public static void createScoreboard(Player p) {
+		me.tigerhix.lib.scoreboard.type.Scoreboard scoreboard = ScoreboardLib.createScoreboard(p).setHandler(new ScoreboardHandler() {
+
+			@Override
+			public String getTitle(Player player) {
+				return LobbyMain.getInstance().getConfig().getString("scoreboard.title", "&6&lMineLC &3&lNetwork");
+			}
+
+			@Override
+			public List<me.tigerhix.lib.scoreboard.type.Entry> getEntries(Player player) {
+				return formatScoreboardLib(p);
+			}
+		}).setUpdateInterval(100L);
+		scoreboard.activate();
+		// scoreboards.add(scoreboard);
+		scoreboardsLibs.put(p, scoreboard);
 	}
 }

@@ -4,9 +4,9 @@ ItemGoBack: "340:0"
 Messages:
   Conecting: "&aConecting with <ServerName>.."
   ConnectError: "&4Error when trying to connect to <ServerName>"
-  GamesInProgress: "&eGames in progress"
-  InvTitleProgress: "&eProgress"
-  MenuGoBack: "&cGo Back"
+  GamesInProgress: "&eJuegos en progreso" # &eGames in progress
+  InvTitleProgress: "&eProgreso" # &eProgress
+  MenuGoBack: "&cAtrás" #&cGo Back
 
 Location:
   world: "world"
@@ -15,6 +15,8 @@ Location:
   z: "684.5"
   pitch: "180"
   yaw: "-11"
+
+version-yml: 'v1.3'
 
 permisos:
   default:
@@ -145,13 +147,13 @@ scoreboard:
   title: "&6&lMineLC &3&lNetwork"
   content:
     - '&7&m+----------------+'
-    - '&8» &fNick: %lc_colortag%$player$'
+    - '&8» &fNick: &7$player$'
     - '&7    '
-    - '&8» &fLCoins: &6%lc_lccoins%'
-    - '&8» &fVIP-Points: &b%lc_vippoints%'
+    - '&8» &fLCoins: &6%lc_lccoins% ⛁'
+    - '&8» &fVIP-Points: &b%lc_vippoints% Ⓥ'
     - '&7   '
     - '&8» &fRango: %lc_rankcolorsignorehidden%'
-    - '&8» &fDuración: $duracion$'
+    - '&8» &fDuración: &a$duration$'
     - '&7  '
     - '&8» &eplay.minelc.net'
     - '&7&m+-----------------+'
@@ -172,3 +174,91 @@ welcome:
   - "           &btienda.minelc.net"
   - ""
   - "&6&l================================"
+
+tienda:
+  vip:
+    7d:
+      precio: 'USD $0.90'
+      vippoints: 100
+    15d:
+      precio: 'USD $2.10'
+      vippoints: 250
+    30d:
+      precio: 'USD $3.30'
+      vippoints: 400
+  svip:
+    7d:
+      precio: 'USD $2.70'
+      vippoints: 270
+    15d:
+      precio: 'USD $3.60'
+      vippoints: 460
+    30d:
+      precio: 'USD $7.20'
+      vippoints: 600
+  elite:
+    7d:
+      precio: 'USD $3.00'
+      vippoints: 450
+    15d:
+      precio: 'USD $4.80'
+      vippoints: 700
+    30d:
+      precio: 'USD $10.80'
+      vippoints: 1100
+  ruby:
+    7d:
+      precio: 'USD $6.00'
+      vippoints: 600
+    15d:
+      precio: 'USD $10.80'
+      vippoints: 1300
+    30d:
+      precio: 'USD $18.00'
+      vippoints: 1600
+
+modalidades:
+  sw:
+    name: ""
+
+
+social-media:
+  facebook:
+    username: ''
+    link: 'mine.lc/facebook'
+    lines:
+      - "&6&m----------------------------------"
+      - "&fComunicate con nosotros vía Facebook"
+      - "&fEnterate de las novedades, información y publicaciones"
+      - "&frelacionadas con el servidor en:"
+      - "&cEsto estará muy pronto."
+      - "&6&m----------------------------------"
+  twitter:
+    username: '@MineLCNetwork'
+    link: 'mine.lc/twitter'
+    lines:
+      - "&6&m----------------------------------"
+      - "&f¡Síguenos en Twitter!"
+      - "&fParticipa de sorteos, eventos y"
+      - "&fentérate de las actualizaciones"
+      - "&b@MineLCNetwork &7| &b&nmine.lc/twitter"
+      - "&6&m----------------------------------"
+  discord:
+    link: 'mine.lc/discord'
+    lines:
+      - "&6&m----------------------------------"
+      - "&f¡Forma parte de nuestro servidor de Discord!"
+      - "&7Juega con amigos, comparte con la comunidad,"
+      - "&7haz reportes, y obtén las últimasn novedades"
+      - "&7y más...!"
+      - "&a¡Entra ya! &7| &5&nmine.lc/discord"
+      - "&6&m----------------------------------"
+  forum:
+    link: 'mine.lc/foro'
+    lines:
+      - "&6&m----------------------------------"
+      - "&fVisita nuestro Foro Oficial"
+      - "&7Reporta usuarios ilegales, comparte tus ideas,"
+      - "&7haz reportes, y obtén las últimas novedades"
+      - "&aForo &7| &7&nmine.lc/foro"
+      - "&6&m----------------------------------"

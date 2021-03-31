@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="scoreboard">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/ScoreboardLib-master/out/artifacts/scoreboard_jar/scoreboard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,10 +1,7 @@
 package com.minelc.LOBBY;
 
 import com.google.common.collect.Maps;
-import com.minelc.LOBBY.Commands.CommandHandler;
-import com.minelc.LOBBY.Commands.MineLCCmd;
-import com.minelc.LOBBY.Commands.RankSubCMD;
-import com.minelc.LOBBY.Commands.tpworld;
+import com.minelc.LOBBY.Commands.*;
 import com.minelc.LOBBY.Controller.ConfigController;
 import com.minelc.LOBBY.Controller.LobbyController;
 import com.minelc.LOBBY.Controller.MobsController;
@@ -19,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import me.tigerhix.lib.scoreboard.ScoreboardLib;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
@@ -137,12 +136,7 @@ public class LobbyMain extends JavaPlugin {
                 mb.remove();
             }
 
-            Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-                @Override
-                public void run() {
-                    LobbyController.updateScoreboardPreGame();
-                }
-            },0,10);
+            ScoreboardLib.setPluginInstance(this);
 
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -264,6 +258,7 @@ public class LobbyMain extends JavaPlugin {
 
         handler.register("rank", new RankSubCMD());
         getCommand("tpworld").setExecutor(new tpworld(instance));
+        getCommand("vippay").setExecutor(new VIPPayCMD());
         getCommand("minelc").setPermission("minelc.admin");
 
         getCommand("minelc").setPermissionMessage(ChatColor.RED+"No tienes permisos!");
@@ -334,5 +329,15 @@ public class LobbyMain extends JavaPlugin {
 
     public static LobbyMain getInstance() {
         return instance;
+    }
+
+    public static String getIconVar(String s) {
+        switch (s) {
+            case "vip":
+            case "vippoints":
+                return "\u24cb";
+            default:
+                return "\u26c1";
+        }
     }
 }

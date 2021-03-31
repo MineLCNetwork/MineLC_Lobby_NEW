@@ -19,5 +19,8 @@
     <orderEntry type="library" name="MineLC_Core" level="project" />
     <orderEntry type="library" name="spigot-1.8.8" level="project" />
     <orderEntry type="library" name="PlaceholderAPI-2.10.4" level="project" />
+    <orderEntry type="library" name="Party-and-Friends-MySQL-Edition-Spigot-API-1.5.1" level="project" />
+    <orderEntry type="library" name="PAFInstallOnBungeeCordAndLobbyServers" level="project" />
+    <orderEntry type="library" name="scoreboard" level="project" />
   </component>
 </module>
