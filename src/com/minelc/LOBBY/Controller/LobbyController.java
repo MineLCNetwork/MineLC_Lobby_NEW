@@ -149,8 +149,8 @@ public class LobbyController{
 		LobbyMain.cooldown.remove(p.getName());
 		Jugador.removeJugador(p.getName());
 
-		if(scoreboard.getTeams().contains(scoreboard.getTeam(p.getName())))
-			scoreboard.getTeam(p.getName()).unregister();
+		/* if(scoreboard.getTeams().contains(scoreboard.getTeam(p.getName())))
+			scoreboard.getTeam(p.getName()).unregister(); */
 
 		scoreboardsLibs.remove(p);
 	}
@@ -2656,8 +2656,8 @@ public class LobbyController{
 					event.setWillDestroy(true);
 					sendVIPPoints(p, toPayPlayer, event.getName());
 				} else {
-					event.setWillClose(false);
-					event.setWillDestroy(false);
+					event.setWillClose(true);
+					event.setWillDestroy(true);
 				}
 			}
 		});
