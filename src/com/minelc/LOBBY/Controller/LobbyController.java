@@ -1,17 +1,24 @@
 package com.minelc.LOBBY.Controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
+import com.avaje.ebean.validation.NotNull;
 import com.google.common.collect.Lists;
 import com.minelc.LOBBY.Util.AnvilGUI;
 import de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayerManager;
 import de.simonsator.partyandfriendsgui.api.PartyFriendsAPI;
+import javafx.scene.text.Text;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.tigerhix.lib.scoreboard.ScoreboardLib;
 import me.tigerhix.lib.scoreboard.common.EntryBuilder;
 import me.tigerhix.lib.scoreboard.type.ScoreboardHandler;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -1682,7 +1689,7 @@ public class LobbyController{
 		p.sendMessage(ChatColor.RED + "El MiniLobby ya no está disponible.");
 	}
 
-	public static IconMenu updateInvSelector(){
+	public static IconMenu updateInvSelector(Player p){
 		if(invSelector==null){
 			invSelector=new IconMenu("Servidores",54,new IconMenu.OptionClickEventHandler(){
 				public void onOptionClick(IconMenu.OptionClickEvent e){
@@ -1732,29 +1739,53 @@ public class LobbyController{
 						case 40:
 							/* pvgm */ MobsController.getMob("mob7").openInventory(e.getPlayer());
 							break;
-
-
+						case 42: // SkyBlock
+							LobbyMain.sendPlayerToServer(e.getPlayer(), "skyblock", "skyblock");
+							break;
 					}
 
 				}
 			},LobbyMain.getInstance());
 		}
 
-		invSelector.setOption(13,new ItemStack(Material.DIAMOND_PICKAXE,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aSurvival&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Un survival con parcelas, economia ,",ChatColor.WHITE+"Mundo PvP, Tiendas, Eventos y",ChatColor.WHITE+"muchas otras cosas para asegurar tu diversion!","",ChatColor.GOLD+"Hay "+GetPlayersInServer("survival")+" jugadores!","",ChatColor.YELLOW+"Click para ingresar!"});
+		// Survival
+		invSelector.setOption(13, getItemStack(Material.DIAMOND_PICKAXE),getTitle("survival"), getModalidadDesc("survival", "survival", p));
+
+		// MiniLobby
 		invSelector.setOption(18,new ItemStack(Material.FIREWORK_CHARGE,1),""+ChatColor.GREEN+ChatColor.BOLD+"MiniLobby",new String[]{"",ChatColor.YELLOW+"Click para activar o desactivar la minilobby"});
-		invSelector.setOption(20,new ItemStack(Material.STAINED_GLASS,1,(short)3),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aCreativo&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Aqui puedes demostrar tus habilidades",ChatColor.WHITE+"como constructor o solo construir por diversión","",ChatColor.GOLD+"Hay "+GetPlayersInServer("creativo")+" jugadores!","",ChatColor.YELLOW+"Click para ingresar!"});
-		invSelector.setOption(24,new ItemStack(Material.BOW,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aSkyWars&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Apareceras en una isla. Para conseguir",ChatColor.WHITE+"la victoria sobrevive y ataca a los",ChatColor.WHITE+"enemigos de las otras islas!",ChatColor.WHITE+"Recibe una recompenza",ChatColor.WHITE+"al cumplir los retos!","",ChatColor.GOLD+"Hay "+GetPlayersInServer("sw")+" jugadores!","",ChatColor.YELLOW+"Click para abrir el menu de arenas!"});
-		invSelector.setOption(38,new ItemStack(Material.PORK,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aHG Clasicos&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Juegos del hambre clásicos con kits. Para",ChatColor.WHITE+"conseguir la victoria tienes que",ChatColor.WHITE+"eliminar a los demas jugadores!","",ChatColor.GOLD+"Hay "+GetPlayersInServer("chg")+" jugadores!","",ChatColor.YELLOW+"Click para abrir el menú de arenas!"});
+
+		// Creativo
+		invSelector.setOption(20,new ItemStack(Material.STAINED_GLASS,1,(short)3),getTitle("creativo"), getModalidadDesc("creativo", "creativo", p));
+
+		// SkyWars
+		invSelector.setOption(24,new ItemStack(Material.BOW,1),getTitle("skywars"), getModalidadDesc("skywars", "sw", p));
+
+		// CHG
+		invSelector.setOption(38,new ItemStack(Material.PORK,1),getTitle("chg"), getModalidadDesc("chg", "chg", p));
+
+		// Tienda
 		invSelector.setOption(26,new ItemStack(Material.BLAZE_ROD,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aTienda&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"¿Quieres ganar más coins y obtener nuevos kits?",ChatColor.WHITE+"Visita nuestra tienda y compra rangos al mejor precio!!",ChatColor.YELLOW+"tienda.minelc.net"});
 
+		// Selector de Lobby
 		invSelector.setOption(27,new ItemStack(Material.ENCHANTED_BOOK,1),""+ChatColor.GREEN+ChatColor.BOLD+"Selector De Lobby",new String[]{"",ChatColor.YELLOW+"Click para abrir el selector de lobby"});
-		invSelector.setOption(29,new ItemStack(Material.DRAGON_EGG,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aEggWars&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Destruye los huevos enemigos para",ChatColor.WHITE+"ganar, pero no olvides proteger el tuyo",ChatColor.WHITE+"para poder reaparecer si mueres!","",ChatColor.GOLD+"Hay "+GetPlayersInServer("ew")+" jugadores!","",ChatColor.YELLOW+"Click para abrir el menu de arenas!"});
-		invSelector.setOption(31,new ItemStack(Material.IRON_SWORD,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aKitPvP&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Selecciona un kit y demustra tus",ChatColor.WHITE+"habilidades asesinando a los demás",ChatColor.WHITE+"jugadores!","",ChatColor.GOLD+"Hay "+GetPlayersInServer("kitpvp")+" jugadores!","",ChatColor.YELLOW+"Click para ingresar!"});
-		invSelector.setOption(33,new ItemStack(Material.ANVIL,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aPractice&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Crea tu kit y demustra tus",ChatColor.WHITE+"habilidades en pvp a travez de",ChatColor.WHITE+"duelos!","",ChatColor.GOLD+"Hay "+countPlayersInServer("practice")+" jugadores!","",ChatColor.YELLOW+"Click para abrir el menu de arenas!"});
+
+		// EggWars
+		invSelector.setOption(29,new ItemStack(Material.DRAGON_EGG,1),getTitle("eggwars"), getModalidadDesc("eggwars", "ew", p));
+
+		// KitPvP
+		invSelector.setOption(31, getItemStack(Material.IRON_SWORD),getTitle("kitpvp"), getModalidadDesc("kitpvp", "kitpvp", p));
+
+		// Practice
+		invSelector.setOption(33,new ItemStack(Material.ANVIL,1),getTitle("practice"), getModalidadDesc("practice", "practice", p));
+
+		// Redes Sociales
 		invSelector.setOption(35,new ItemStack(Material.BEACON,1),""+ChatColor.GREEN+ChatColor.BOLD+"Redes Sociales",new String[]{"",ChatColor.YELLOW+"Click para ver nuestras redes sociales!"});
 
-		invSelector.setOption(42,new ItemStack(Material.GRASS,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&ASkyBlock&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.RED+"Modalidad Beta ",ChatColor.GRAY+"Aún no disponible."});
-		invSelector.setOption(40,new ItemStack(Material.CAKE,1),""+ChatColor.translateAlternateColorCodes('&',"&6&kii&aPvPGames&6&kii"),new String[]{"",ChatColor.translateAlternateColorCodes('&',"&6&m-------------------------------"),ChatColor.WHITE+"Entra y disfruta de varios",ChatColor.WHITE+"minijuegos, juega en modo",ChatColor.YELLOW+"coperativo y lucha con tu equipo!","",ChatColor.GRAY+"Hay "+GetPlayersInServer("pvpg")+" jugadores!","",ChatColor.YELLOW+"Click para ingresar!"});
+		// SkyBlock
+		invSelector.setOption(42,new ItemStack(Material.GRASS,1),getTitle("skyblock"), getModalidadDesc("skyblock", "skyblock", p));
+
+		// PvPGames
+		invSelector.setOption(40,new ItemStack(Material.CAKE,1),getTitle("pvpgames"), getModalidadDesc("pvpgames", "pvpg", p));
 
 
 		ItemStack glassBlue = new ItemStack(Material.getMaterial(160),1,(short) 9);
@@ -2107,15 +2138,23 @@ public class LobbyController{
 				e.setWillClose(false);
 				e.setWillDestroy(true);
 
-				if(e.getPosition()==11){
-					getInvStats(e.getPlayer()).open(e.getPlayer());
-				}else if(e.getPosition()==15){
-					getInvSettings(e.getPlayer()).open(e.getPlayer());
+				switch (e.getPosition()) {
+					case 11:
+						getInvStats(e.getPlayer()).open(e.getPlayer());
+						break;
+					case 15:
+						getInvSettings(e.getPlayer()).open(e.getPlayer());
+						break;
+					case 13:
+						// PartyFriendsAPI.openPartyInventory(e.getPlayer(), 1);
+						PartyFriendsAPI.openMainInventory(e.getPlayer(), 0);
+						break;
 				}
 			}
 		},LobbyMain.getInstance(),true)
 				.setOption(11,new ItemStack(Material.PAPER,1),ChatColor.GREEN+"Estadisticas",ChatColor.GRAY+"Muestra tus estadisticas de cada",ChatColor.GRAY+"juego y un resumen de todas!")
-				.setOption(15,new ItemStack(Material.REDSTONE_COMPARATOR,1),ChatColor.GREEN+"Opciones",ChatColor.GRAY+"Permite cambiar algunas opciones en ",ChatColor.GRAY+"la lobby.");
+				.setOption(15,new ItemStack(Material.REDSTONE_COMPARATOR,1),ChatColor.GREEN+"Opciones",ChatColor.GRAY+"Permite cambiar algunas opciones en ",ChatColor.GRAY+"la lobby.")
+				.setOption(13, new ItemUtils(p.getName(), 1), ChatColor.GREEN + "Amigos", ChatColor.GRAY + "Modifica opciones, y lista a", ChatColor.GRAY + "tus amigos en MineLC");
 		//.setOption(22, new ItemUtils(p.getName(), 1), ChatColor.GREEN+"Informacion Del Jugador", ChatColor.GRAY+"Rango: "+ChatColor.GOLD+j.getRank().toString(), ChatColor.GRAY+"Nivel: "+ChatColor.GOLD+"0",ChatColor.GRAY+"LCoins: "+ChatColor.GOLD+j.getLcoins(),ChatColor.GRAY+"VIP-Points: "+ChatColor.GOLD+j.getRankpoints());
 
 		return invPerfil;
@@ -2240,7 +2279,7 @@ public class LobbyController{
 						//j.getBukkitPlayer().sendMessage(ChatColor.RED+"La opcion de cuenta premium solo funciona en usuarios premium (Minecraft Comprado) si no eres premium te quedaras sin acceso al servidor!");
 						//j.getBukkitPlayer().playSound(j.getBukkitPlayer().getLocation(), Sound.NOTE_BASS, 0.7F, 0.7F);
 						Database.savePlayerBungee(j);
-						j.getBukkitPlayer().kickPlayer(ChatColor.GREEN+"Cuenta premium activada!");
+						j.getBukkitPlayer().kickPlayer(ChatColor.GREEN+"Reconéctate para efectuar los cambios");
 						e.setWillClose(false);
 						e.setWillDestroy(true);
 						return;
@@ -2250,6 +2289,10 @@ public class LobbyController{
 							j.setHideRank(!j.isHideRank());
 							Database.savePlayerRank(j);
 						}
+						break;
+					case 33:
+					case 42:
+						performCommandBungeecord(j.getBukkitPlayer());
 						break;
 					case 31:
 					case 40:
@@ -2473,7 +2516,10 @@ public class LobbyController{
 			invPerfil.setOption(38,new ItemStack(Material.INK_SACK,1,(short)8),ChatColor.RED+"Desactivado",ChatColor.GRAY+"Click para activar");
 		}
 		invPerfil.setOption(31,new ItemUtils(Material.WOOL,1),ChatColor.RED+"Color de nombre",ChatColor.GRAY+"Selecciona el color de tu nombre");
-		invPerfil.setOption(40,new ItemStack(Material.INK_SACK,1,(short)10),ChatColor.RED+"Desactivado",ChatColor.GRAY+"Click para activar");
+		invPerfil.setOption(40,new ItemStack(Material.INK_SACK,1,(short)5),ChatColor.RED+"Seleccionar",ChatColor.GRAY+"Click para seleccionar");
+
+		invPerfil.setOption(33,new ItemUtils(Material.LEASH,1),ChatColor.RED+"Permitir saltos",ChatColor.GRAY+"Permite o no a cualquier persona", ChatColor.GRAY + "hacer /tpsv hacia ti.");
+		invPerfil.setOption(42,new ItemStack(Material.INK_SACK,1,(short)9),ChatColor.LIGHT_PURPLE+"Alternar",ChatColor.GRAY+"Click para alternar");
 	}
 
 	private static String getDurationSmall(long time) {
@@ -2485,21 +2531,21 @@ public class LobbyController{
 			float time2 = (float)time;
 			if (time2 > 2880.0F) {
 				time2 = time2 / 24.0F / 60.0F;
-				duracion = (int)time2 + "d, ";
+				duracion = (int)time2 + "d ";
 				time2 = (time2 - (float)((int)time2)) * 24.0F * 60.0F;
 			} else if (time2 > 1440.0F) {
 				time2 = time2 / 24.0F / 60.0F;
-				duracion = (int)time2 + "d, ";
+				duracion = (int)time2 + "d ";
 				time2 = (time2 - (float)((int)time2)) * 24.0F * 60.0F;
 			}
 
 			if (time2 > 120.0F) {
 				time2 /= 60.0F;
-				duracion = duracion + (int)time2 + "h y ";
+				duracion = duracion + (int)time2 + "h ";
 				time2 = (time2 - (float)((int)time2)) * 60.0F;
 			} else if (time2 > 60.0F) {
 				time2 /= 60.0F;
-				duracion = duracion + (int)time2 + "h y ";
+				duracion = duracion + (int)time2 + "h ";
 				time2 = (time2 - (float)((int)time2)) * 60.0F;
 			} else {
 				duracion = duracion.replace(", ", "");
@@ -2758,5 +2804,70 @@ public class LobbyController{
 		scoreboard.activate();
 		// scoreboards.add(scoreboard);
 		scoreboardsLibs.put(p, scoreboard);
+	}
+
+	public static String[] getModalidadDesc(String s, String servername, Player p) {
+		if (s == null) {
+			return null;
+		}
+
+		List<String> desc;
+		String path = "items.modalidades." + s + ".lore";
+
+		desc = LobbyMain.getInstance().getConfig().getStringList(path);
+
+		List<String> descc = new ArrayList<>();
+		for (String st : desc) {
+			st = st.replaceAll("%online%", GetPlayersInServer(servername) + "");
+			st = ChatColor.translateAlternateColorCodes('&', st);
+			st = PlaceholderAPI.setPlaceholders(p, st);
+			descc.add(st);
+		}
+
+		return descc.toArray(new String[0]);
+	}
+
+	/* public static ItemStack getModalidadItemStack(String modalidad, String s, String servername, Player p) {
+		String path = "items.modalidades." + s + ".title";
+		String titulo = ChatColor.translateAlternateColorCodes('&', LobbyMain.getInstance().getConfig().getString(path, "No se ha puesto titulo"));
+
+		ItemStack itemStack = new ItemStack(Material.ACACIA_DOOR, titulo)
+	} */
+
+	public static ItemStack getItemStack(Material m) {
+		ItemStack item = new ItemStack(m, 1);
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		item.setItemMeta(itemMeta);
+
+		return item;
+	}
+
+	public static String getTitle(String modalidad) {
+		String path = "items.modalidades." + modalidad + ".title";
+
+		return ChatColor.translateAlternateColorCodes('&', LobbyMain.getInstance().getConfig().getString(path, "No se ha puesto titulo"));
+	}
+
+	public static void performCommandBungeecord(Player p) {
+		p.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "------------------------------");
+		p.sendMessage(ChatColor.GRAY + "Selecciona una opción");
+		net.md_5.bungee.api.chat.TextComponent message = new net.md_5.bungee.api.chat.TextComponent("§a§l[Permitir]");
+		message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/settings tpsv on"));
+
+		String friendHover = ChatColor.GREEN + "Permitir /tpsv hacia ti.";
+		message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(friendHover).create()));
+
+		String friendHoverNo = ChatColor.RED + "Negar los /tpsv hacia ti.";
+		net.md_5.bungee.api.chat.TextComponent message2 = new net.md_5.bungee.api.chat.TextComponent("§c§l[Negar]");
+		message2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/settings tpsv off"));
+		message2.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(friendHoverNo).create()));
+
+		message.addExtra("  ");
+
+		message.addExtra(message2);
+
+		p.spigot().sendMessage(message);
+		p.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "------------------------------");
 	}
 }

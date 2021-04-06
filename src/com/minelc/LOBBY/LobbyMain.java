@@ -138,6 +138,8 @@ public class LobbyMain extends JavaPlugin {
 
             ScoreboardLib.setPluginInstance(this);
 
+            // this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         } catch(Exception ex) {
             ex.printStackTrace();
             Bukkit.shutdown();
@@ -279,7 +281,9 @@ public class LobbyMain extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
             @Override
             public void run() {
-                LobbyController.updateInvSelector();
+                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                    LobbyController.updateInvSelector(p);
+                }
             }
         }, 40L, 25L);
     }

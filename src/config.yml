@@ -217,10 +217,114 @@ tienda:
       precio: 'USD $18.00'
       vippoints: 1600
 
-modalidades:
-  sw:
-    name: ""
-
+items:
+  modalidades:
+    survival:
+      title: "&6&k||&aSurvival&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fUn survival con parcelas, economía,"
+        - "&fmundo PvP, tiendas, eventos y muchas"
+        - "&fotras cosas más para asegurar tu diversión"
+        - "&8&m-----------------------------------"
+        - "   "
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    creativo:
+      title: "&6&k||&aCreativo&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fDemuestra tus habilidades como constructor,"
+        - "&frolea, y pásala bien con todos en esta modalidad"
+        - "&fLa imaginación es tu límite."
+        - "&8&m-----------------------------------"
+        - "   "
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    eggwars:
+      title: "&6&k||&aEggWars&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fDestruye los huevos enemigos para ganar,"
+        - "&fprotege el tuyo para poder reaparecer"
+        - "&fcompra mejoras y utiles objetos para lograr"
+        - "&ftu acometido y ganar la partida!"
+        - "&8&m-----------------------------------"
+        - "   "
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    chg:
+      title: "&6&k||&aHG Clásicos&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fJuegos del Hambre, como siempre lo has conocido"
+        - "&fMata a todos los jugadores y sé el último hombre"
+        - "&fen pie para poder ganar."
+        - "&8&m-----------------------------------"
+        - "   "
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    pvpgames:
+      title: "&6&k||&aPvPGames&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fEntra y disfruta de una variedad de juegos"
+        - "&fDiviértete con tus amigos, jugando a alguno"
+        - "&fde estos juegos"
+        - "&8&m-----------------------------------"
+        - ""
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    kitpvp:
+      title: "&6&k||&aKitPvP&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fDemuestra tus habilidades en PvP aquí"
+        - "&fUsa un kit, personalízalo a tu gusto a"
+        - "&f medida que avanzas, ¡y sal a la batalla!"
+        - "&8&m-----------------------------------"
+        - ""
+        - "&6¡Hay %online% jugadores conectados!"
+        - " "
+        - "&eClick para ingresar"
+    skywars:
+      title: "&6&k||&aSkyWars&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fSaquea sus cofres y viaja al centro del"
+        - "&fmapa para luchar contra otros jugadores"
+        - "&fo conseguir un mejor botín. Mata a los demás"
+        - "&fy sé el último equipo o jugador en pie"
+        - "&8&m-----------------------------------"
+        - ""
+        - "&6¡Hay %online% jugadores conectados!"
+        - ""
+        - "&eClick para ingresar"
+    practice:
+      title: "&6&k||&aPractice&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&fPractica tus habilidades de PvP con un"
+        - "&fkit personalizado. En tu modo de arena"
+        - "&fde preferencia. Duela a los demás y gana"
+        - "&frecompensas de los eventos"
+        - "&8&m-----------------------------------"
+        - ""
+        - "&6¡Hay %online% jugadores conectados!"
+        - ""
+        - "&eClick para ingresar"
+    skyblock:
+      title: "&6&k||&aSkyBlock&6&k||"
+      lore:
+        - "&8&m-----------------------------------"
+        - "&7&o¿Qué tenemos, un viajero del tiempo?"
+        - "&cModalidad en construcción"
+        - "&8&m-----------------------------------"
 
 social-media:
   facebook:
