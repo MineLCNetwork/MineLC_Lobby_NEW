@@ -1987,13 +1987,23 @@ public class LobbyController{
 		time=(time-System.currentTimeMillis())/1000/60;
 		float time2=time;
 
+		if (time2 > 1051920) {
+			time2 = time2 / 525600;
+			duracion = (int)time2 + " años, ";
+			time2 = (time2 - (float)((int)time2)) * 525600;
+		} else if (time2 > 525600) {
+			time2 = time2 / 525600;
+			duracion = (int) time2 + " año, ";
+			time2 = (time2 - (float) ((int) time2)) * 525600;
+		}
+
 		if(time2>2880){
 			time2=time2/24/60;
-			duracion=(int)time2+" días, ";
+			duracion=duracion+(int)time2+" días, ";
 			time2=(time2-(int)time2)*24*60;
 		}else if(time2>1440){
 			time2=time2/24/60;
-			duracion=(int)time2+" día, ";
+			duracion=duracion+(int)time2+" día, ";
 			time2=(time2-(int)time2)*24*60;
 		}
 
@@ -2526,16 +2536,26 @@ public class LobbyController{
 		String duracion = "";
 		if (time <= 0L) {
 			return "";
+		}
+		time = (time - System.currentTimeMillis()) / 1000L / 60L;
+		float time2 = (float)time; // TIME 2 EN MINUTOS Y FLOAT
+		if (time2 > 52034400.0F) {
+			return "99+ años";
 		} else {
-			time = (time - System.currentTimeMillis()) / 1000L / 60L;
-			float time2 = (float)time;
+			// time = (time - System.currentTimeMillis()) / 1000L / 60L;
+			if (time2 > 525600.0F) {
+				time2 = time2 / 525600.0F;
+				duracion = (int)time2 + "a ";
+				time2 = (time2 - (float)((int)time2)) * 525600.0F;
+			}
+
 			if (time2 > 2880.0F) {
 				time2 = time2 / 24.0F / 60.0F;
-				duracion = (int)time2 + "d ";
+				duracion = duracion + (int)time2 + "d ";
 				time2 = (time2 - (float)((int)time2)) * 24.0F * 60.0F;
 			} else if (time2 > 1440.0F) {
 				time2 = time2 / 24.0F / 60.0F;
-				duracion = (int)time2 + "d ";
+				duracion = duracion + (int)time2 + "d ";
 				time2 = (time2 - (float)((int)time2)) * 24.0F * 60.0F;
 			}
 

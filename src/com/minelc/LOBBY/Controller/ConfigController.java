@@ -26,7 +26,6 @@ public class ConfigController {
         if (!this.configFolder.exists()) {
             this.configFolder.mkdirs();
         }
-
     }
 
     public static ConfigController getInstance() {
